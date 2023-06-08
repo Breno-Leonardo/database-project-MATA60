@@ -1,0 +1,19 @@
+
+.divRequest {
+  margin-top:1rem;
+  font-size: 1.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.spanError{
+  margin-top:2rem;
+  font-size: 1.7rem;
+  visibility: hidden;
+}
+.spanVisible{
+  visibility: visible;
+}

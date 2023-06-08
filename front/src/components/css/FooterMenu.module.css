@@ -1,0 +1,85 @@
+.footer {
+  background-color: var(--green);
+  width: 100%;
+  display: none;
+  position:fixed;
+  bottom:0rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: white;
+  box-shadow: 0px 1px 5px black;
+}
+.footer a {
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+.icon {
+  height: 2rem;
+}
+
+.itemMenu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.iconMenu:hover,
+.itemMenu:hover {
+  scale: 1.2;
+}
+@media (max-width: 1024px) {
+  .footer {
+    display: flex;
+  }
+  .logo {
+    height: 4rem;
+    margin-left: 0rem;
+    
+  }
+  .menuAccount {
+    margin-right: 0rem;
+  }
+}
+@media (max-width: 768px) {
+  .logoLogin {
+    height: 6rem;
+  }
+  .itemMenu {
+    font-size: 0.8rem;
+  }
+  .icon{
+    height: 1.5rem;
+  }
+  .iconMenu {
+    height: 5rem;
+  }
+  .footer {
+    justify-content: space-around;
+    padding: 0.6rem 0rem;
+  }
+  .logo {
+    height: 4rem;
+    margin-left: 4rem;
+    
+    flex-grow: 17;
+  }
+}
+@media (max-width: 325px) {
+  .logo {
+    height: 4rem;
+    margin-left: 2rem;
+    
+    flex-grow: 17;
+  }
+  .itemMenu {
+    font-size: 0.7rem;
+  }
+}

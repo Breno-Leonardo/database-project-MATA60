@@ -1,0 +1,58 @@
+.button{
+    border:none;
+    border-radius:30px;
+    padding: 0.6rem 0rem;
+    color:white;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.6);
+    margin-top:2.5rem;
+}
+.Invisible{
+    visibility: hidden;
+}
+
+.Red{
+    background-color:var(--red);
+}
+.Red:hover{
+    background-color:var(--red-light);
+}
+.Green{
+    background-color:var(--green);
+}
+.Green:hover{
+    background-color:var(--green-light);
+    transition: 0.2s ease-in;
+}
+.Big{
+    font-size:2.25rem;
+    width:16rem;
+}
+
+.Small{
+    font-size:0.8rem;
+    font-weight: 500;
+    width:5rem;
+    height:2rem;  
+    margin-top:1.7rem;
+    border-radius:10px;
+}
+.ExtraBig{
+    margin-top: 3rem;
+    width:24rem;
+    font-size:2.25rem;
+}
+
+@media(max-width:768px){
+    .ExtraBig{
+        margin-top: 3rem;
+        width:16rem;
+        font-size:1.6rem;
+    }
+    .Big{
+        font-size:1.6rem;
+        width:14rem;
+    }
+}
+@media(max-width:425px){
+    
+}

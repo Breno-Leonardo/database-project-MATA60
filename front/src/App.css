@@ -1,0 +1,56 @@
+:root {
+  --green-light: #33a457;
+  --green: #01653c;
+  --red: #ad1e1e;
+  --red-light: #ff0000;
+  --blue: #2237a9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+body,
+input,
+select,
+textarea,
+button {
+  font-family: "Roboto", sans-serif;
+  font-size: 1 rem;
+  font-weight: 400;
+}
+textarea {
+  resize: none;
+}
+#root {
+  width: 100%;
+}
+
+.App {
+  position: relative;
+  display: flex;
+  min-height: calc(100vh - 8.2rem);
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: calc(100vh - 6.2rem);
+  width: 100%;
+  background-color: #e9ecef;
+}
+.noInformation{
+  font-size: 1.5rem;
+  margin-top:2rem;
+}
+
+@media (max-width: 1024px) {
+  .content {
+    background-color:white;
+  }
+}

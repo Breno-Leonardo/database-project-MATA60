@@ -1,0 +1,72 @@
+.topics {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+  width: 100%;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+.warning{
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-self: center;
+  align-self: center;
+  margin-top: 2rem;
+  padding:1rem;
+  border-radius: 20px;
+  font-size: 1.3rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  background: rgb(109, 8, 8);
+  background: linear-gradient(90deg, rgba(109, 8, 8, 1) 0%, rgba(255, 0, 0, 1) 50%, rgba(109, 8, 8, 1) 100%);
+  color: white;
+  font-weight: 500;
+}
+.warning span{
+  font-size: 1.8rem;
+}
+  
+.warning p{
+margin-top: 1.2rem;
+}
+.divForButton{
+  display: flex;
+  width:100%;
+  flex-direction: row;
+  align-items: center;
+}
+.divCards{
+  display: flex;
+  flex-wrap:wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: space-between;
+  margin: 2rem 6rem;
+}
+
+.topicsWithButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-right:5rem;
+  margin-top: 2rem;
+  width: 100%;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+.topicsWithButton > p{
+  width:15%;
+  align-items:center;
+  text-align: center;
+  word-break: break-word;
+}
+@media (max-width: 768px) {
+  .divCards {
+    justify-content: space-around;
+    margin: 0rem 0rem 0rem 0rem;
+  }
+}

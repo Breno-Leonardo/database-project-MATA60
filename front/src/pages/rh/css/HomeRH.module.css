@@ -1,0 +1,20 @@
+
+.divCards{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 6rem;
+}
+
+.divCards a{
+  text-decoration: none;
+  margin:0;
+  padding:0;
+  color:white;
+}
+@media (max-width: 768px) {
+.divCards{
+  flex-direction: column;
+}
+}

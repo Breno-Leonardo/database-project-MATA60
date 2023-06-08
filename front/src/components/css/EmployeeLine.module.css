@@ -1,0 +1,144 @@
+.employeeLine {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+  width: 100%;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.employeeLine > p {
+  width: 15%;
+  align-items: center;
+  text-align: center;
+  word-break: keep-all;
+  text-shadow: 0px 0px 0.5px rgba(0, 0, 0, 0.25);
+}
+
+.center { 
+  justify-content: center;
+}
+
+.nameDiv {
+  width: 15%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  word-break: break-word;
+}
+.nameDiv > img {
+  margin-left: 1.5rem;
+
+  margin-right: 0.5rem;
+}
+.alertDiv {
+  width: 15%;
+  color: red;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  word-break: break-word;
+  margin-bottom: 1.5rem;
+}
+.alertSpan {
+  color: white;
+  font-size: 0.7rem;
+  background-color: red;
+  padding: 0.2rem;
+  border-radius: 5px;
+  box-shadow: 0px 0px 2px black;
+}
+.icon {
+  height: 2rem;
+}
+
+.green {
+  color: var(--green-light);
+}
+.red {
+  color: var(--red);
+}
+.blue {
+  color: var(--blue);
+}
+
+.divForButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: 14.4rem;
+}
+@media(max-width:1024px){
+  .icon {
+    height: 1.5rem;
+    
+  }
+  .nameDiv > img {
+    margin-left: 0rem;
+    margin-right: 0rem;
+  }
+  .employeeLine { 
+    margin-top: 2rem;
+    font-size: 1rem;
+    justify-content: space-around;
+  }
+  .employeeLine > p {
+    width: 17%;
+  }
+  .alertDiv{
+    width: 22%;
+  }
+  .nameDiv{
+    width: 22%;
+    text-align:center ;
+
+  }
+}
+@media(max-width:768px){
+  .icon {
+    display: none;
+  }
+  .employeeLine { 
+    margin-top: 2rem;
+    font-size: 1rem;
+    
+  }
+  .employeeLine > p {
+    width: 19%;
+  }
+  .alertSpan {
+    font-size: 0.5rem;
+    
+  }
+}
+@media(max-width:600px){
+ 
+  .employeeLine { 
+    margin-top: 1.75rem;
+    font-size: 1rem;
+    
+  }
+  .employeeLine > p {
+    width: 19%;
+  }
+}
+
+@media(max-width:375px){
+  .employeeLine {
+    font-size: 0.9rem;
+  }
+}
+
+@media(max-width:325px){
+  .employeeLine > p {
+    width: 19%;
+  }
+  .employeeLine {
+    font-size: 0.75rem;
+  }
+}

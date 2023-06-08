@@ -1,0 +1,122 @@
+.header {
+  background-color: var(--green);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: white;
+  box-shadow: 0px 2px 5px black;
+}
+.header a {
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+.headerLogin {
+  background-color: var(--green);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.6rem 2rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: white;
+  box-shadow: 0px 1px 5px black;
+}
+.logo {
+  height: 5rem;
+  margin-left: 5rem;
+}
+.logoLogin {
+  height: 7rem;
+}
+
+.icon {
+  height: 2rem;
+}
+.iconMenu {
+  height: 2rem;
+}
+
+.exit,
+.account {
+  display: flex;
+  align-items: center;
+}
+.exit {
+  margin-top: 0.2rem;
+}
+.account span,
+.exit span {
+  margin-left: 0.4rem;
+ 
+}
+
+.itemMenu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.exit:hover,
+.iconMenu:hover,
+.itemMenu:hover {
+  scale: 1.2;
+}
+@media (max-width: 1024px) {
+  .logo {
+    height: 4rem;
+    margin-left: 0rem;
+    
+  }
+  .menuAccount {
+    margin-right: 0rem;
+  }
+}
+@media (max-width: 768px) {
+  .logoLogin {
+    height: 6rem;
+  }
+  .itemMenu {
+    display: none;
+  }
+  .header {
+    background-color: var(--green);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.6rem 0rem;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: white;
+    box-shadow: 0px 1px 5px black;
+  }
+  .logo {
+    height: 4rem;
+    margin-left: 4rem;
+    
+    flex-grow: 17;
+  }
+  .menuAccount {
+    margin-right: 0rem;
+    flex-grow: 1;
+  }
+  .account {
+    display: none;
+  }
+}
+@media (max-width: 350px) {
+  .logo {
+    height: 4rem;
+    margin-left: 2rem;
+    
+    flex-grow: 17;
+  }
+}

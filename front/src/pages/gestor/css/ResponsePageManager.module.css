@@ -1,0 +1,45 @@
+
+.infos {
+  display: flex;
+  font-size: 1.3rem;
+  
+}
+.infoPrimary { 
+  margin-top: 1.5rem;
+  display: flex;
+  width: 25rem;
+  margin-left:5rem;
+}
+.infoSecondary {
+  margin-top: 1.5rem;
+  display: flex;
+  width: 25rem;
+  
+}
+.infos p {
+  width: 20rem;
+  margin-right: 9rem;
+}
+.divForButton {
+  display: flex;
+  width: 40rem;
+  justify-content: space-between;
+ }
+
+ @media (max-width: 768px) {
+  .infos {
+    flex-direction: column;
+    font-size: 1.2rem;
+  }
+  .infoPrimary, .infoSecondary { 
+    margin-top: 1.5rem;
+    justify-content: center;
+    width: auto;
+    margin-left:0rem;
+  }
+  .divForButton {
+    flex-direction: column;
+    width: auto;
+    justify-content: space-between;
+   }
+ }

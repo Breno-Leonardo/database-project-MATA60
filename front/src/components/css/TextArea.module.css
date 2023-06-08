@@ -1,0 +1,44 @@
+.divForText {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.divForText span {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.TextArea {
+  width: 50rem;
+  height: 15rem;
+  font-size: 1.3rem;
+  padding: 0.5rem;
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.6);
+  border: none;
+  outline-color: transparent;
+}
+.TextArea:focus {
+  outline-color: var(--green-light);
+  transition: 0.2s ease-in;
+}
+@media (max-width: 768px) {
+  .TextArea {
+    width: 20rem;
+    font-size: 1.1rem;
+  }
+  .divForText {
+    margin-left:0rem;
+  }
+}
+@media (max-width: 425px) {
+  .TextArea {
+    width: 20rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .TextArea {
+    width: 18rem;
+  }
+}

@@ -1,0 +1,13 @@
+
+.divSearch {
+margin: 1.5rem 0rem;
+
+}
+.divSearch span{
+  font-size:1.5rem;
+}
+.divButtons {
+  display: flex;
+  justify-content: center;
+  
+}

@@ -1,0 +1,41 @@
+.containerCenter{
+  align-self:center;
+  justify-self: center;
+  box-shadow: 0px 1px 5px black;
+  padding: 3rem;
+  margin: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color:white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+  border-radius: 25px;
+}
+.loading {
+  align-self:center;
+  justify-self: center;
+  animation: is-rotating 1s infinite;
+  border: 6px solid #e5e5e5;
+  border-radius: 50%;
+  border-top-color: var(--green-light);
+  height: 4rem;
+  width: 4rem;
+}
+
+@keyframes is-rotating {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media(max-width:425px){
+  .containerCenter{
+    padding: 0rem 0rem 3rem 0rem;
+    margin: 1.5rem 0rem 0rem 0rem;
+    display: flex;
+    box-shadow: none;
+    
+    
+  }
+}

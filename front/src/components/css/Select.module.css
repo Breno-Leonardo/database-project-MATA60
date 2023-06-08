@@ -1,0 +1,39 @@
+.Select {
+ 
+  border-radius: 20px;
+  border: none;
+  outline-color: transparent;
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.5);
+  
+}
+.Medium{
+  height: 2.5rem;
+  width: 20rem;
+  padding-left: 1rem;
+  font-size: 1.3rem;
+}
+
+.widthMedium {
+  width: 15rem;
+}
+.widthSmall {
+  width: 10rem;
+}
+
+.Select:focus {
+  border: 3px solid var(--green-light) ;
+  transition: 0.2s ease-in;
+  box-shadow: 0px 0px 10px var(--green-light);
+}
+
+
+@media(max-width:768px){
+  .Medium {
+    height: 2.5rem;
+    width: 15rem;
+    font-size: 1.1rem;
+  }
+}
+@media(max-width:425px){
+  
+}
