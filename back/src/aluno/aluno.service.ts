@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DeleteResult } from 'typeorm';
 import { AlunoEntity } from './entities/aluno.entity';
 import * as bcrypt from 'bcrypt';
+import { SolicitacaoAproveitamentoEntity } from 'src/solicitacao_aproveitamento/entities/solicitacao_aproveitamento.entity';
 
 const saltOrRounds = 10;
 
@@ -13,14 +14,17 @@ export class AlunoService {
     private readonly alunoRepository: Repository<AlunoEntity>,
   ) {}
 
-  async findAlunoByMatricula(matricula: string): Promise<AlunoEntity> {
+  async findAlunoByMatricula(matricula: number): Promise<AlunoEntity> {
     const aluno = await this.alunoRepository.findOne({
-      relations: ['curso'],
       where: { matricula },
     });
     if (!aluno) {
       throw new NotFoundException(`Aluno: ${matricula} not found`);
     }
     return aluno;
+  }
+
+  async getAllAlunos(): Promise<AlunoEntity[]> {
+    return await this.alunoRepository.query('Select * from aluno');
   }
 }

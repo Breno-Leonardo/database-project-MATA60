@@ -21,4 +21,9 @@ export class AlunoController {
   async getCollaboratorByRegistration(@Param('matricula') matricula) {
     return this.alunoService.findAlunoByMatricula(matricula);
   }
+
+  @Get('lista-alunos')
+  async getAllAlunos() {
+    return this.alunoService.getAllAlunos();
+  }
 }

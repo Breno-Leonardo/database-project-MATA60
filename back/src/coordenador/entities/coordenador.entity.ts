@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 @Entity({ name: 'coordenador' })
 export class CoordenadorEntity {
   @PrimaryColumn({ name: 'matricula_siape' })
-  matricula_siape: string;
+  matricula_siape: number;
 
   @Column({ name: 'nome', nullable: false })
   nome: string;

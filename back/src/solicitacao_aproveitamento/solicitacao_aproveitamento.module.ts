@@ -4,11 +4,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SolicitacaoAproveitamentoEntity } from './entities/solicitacao_aproveitamento.entity';
 import { SolicitacaoAproveitamentoController } from './solicitacao_aproveitamento.controller';
 import { SolicitacaoAproveitamentoService } from './solicitacao_aproveitamento.service';
-import { AlunoModule } from 'src/aluno/aluno.module';
+import { Repository } from 'typeorm';
 
 @Module({
   imports: [
-    AlunoModule,
     TypeOrmModule.forFeature([SolicitacaoAproveitamentoEntity]),
     JwtModule.registerAsync({
       useFactory: () => ({

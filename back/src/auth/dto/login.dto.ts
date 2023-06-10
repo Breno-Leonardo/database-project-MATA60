@@ -1,8 +1,9 @@
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 
 export class LoginDto {
-  @IsString()
-  matricula: string;
+  @IsNumber()
+  matricula: number;
+
   @IsString()
   senha: string;
 }

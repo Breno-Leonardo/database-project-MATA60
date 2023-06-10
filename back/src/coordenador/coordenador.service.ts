@@ -10,6 +10,17 @@ const saltOrRounds = 10;
 export class CoordenadorService {
   constructor(
     @InjectRepository(CoordenadorEntity)
-    private readonly collaboratorRepository: Repository<CoordenadorEntity>,
+    private readonly coordenadorRepository: Repository<CoordenadorEntity>,
   ) {}
+  async findCoordenadorByMatricula(
+    matricula_siape: number,
+  ): Promise<CoordenadorEntity> {
+    const coordenador = await this.coordenadorRepository.findOne({
+      where: { matricula_siape },
+    });
+    if (!coordenador) {
+      throw new NotFoundException(`Coordenador: ${matricula_siape} not found`);
+    }
+    return coordenador;
+  }
 }

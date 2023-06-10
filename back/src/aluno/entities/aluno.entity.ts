@@ -4,7 +4,7 @@ import { Entity, Column, ManyToOne, PrimaryColumn, JoinColumn } from 'typeorm';
 @Entity({ name: 'aluno' })
 export class AlunoEntity {
   @PrimaryColumn({ name: 'matricula' })
-  matricula: string;
+  matricula: number;
 
   @Column({ name: 'nome', nullable: false })
   nome: string;
@@ -24,6 +24,6 @@ export class AlunoEntity {
   @ManyToOne(() => CursoEntity, (curso) => curso.codigo, {
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'curso', referencedColumnName: 'codigo' })
-  curso: CursoEntity;
+  @JoinColumn({ name: 'codigo_curso', referencedColumnName: 'codigo' })
+  codigo_curso: CursoEntity;
 }
