@@ -1,5 +1,5 @@
 .header {
-  background-color: var(--green);
+  background-color: var(--blue);
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -17,7 +17,7 @@
   color: white;
 }
 .headerLogin {
-  background-color: var(--green);
+  background-color: var(--blue-light);
   width: 100%;
   display: flex;
   justify-content: center;
@@ -33,7 +33,7 @@
   margin-left: 5rem;
 }
 .logoLogin {
-  height: 7rem;
+  height: 8rem;
 }
 
 .icon {

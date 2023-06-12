@@ -19,7 +19,7 @@ import { VacationRequestReturn } from "../../types/ReturnVacationRequestType";
 
 export function ResponsePageManager() {
   const [managerMessage, setManagerMessage] = useState("");
-  const { collaborator } = useGlobalContext();
+  const { user } = useGlobalContext();
   const { currentVacationRequest, setCurrentVacationRequestStorageContext } =
     useGlobalContext();
   const [loadingIntersection, setLoadingIntersection] = useState(true);

@@ -6,33 +6,12 @@
   flex-direction: row;
   align-items: center;
 }
-.divGantt {
-  padding: 3.5rem;
-  width:100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+
 .divShadowBorder {
   box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.2);
 }
-.divGanttButtons {
-  display: flex;
-  gap:1.5rem;
-  justify-content: center;
-  margin-bottom:1rem;
-}
-.divGanttMobile {
-  display:none
-}
-.divCards {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: space-between;
-  margin: 0rem 6rem 2rem 6rem;
-}
+
+
 
 .topicsWithButton {
   display: flex;
@@ -51,31 +30,30 @@
   text-align: center;
   word-break: break-word;
 }
-.divSearch {
-  margin: 3rem 0rem 1rem 0rem;
-  align-self: center;
-  padding: 1.5rem;
-  background: rgb(1, 101, 60);
-  background: linear-gradient(90deg, rgba(1, 101, 60, 1) 0%, rgba(51, 164, 87, 1) 50%, rgba(1, 101, 60, 1) 100%);
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-  border-radius: 20px;
-}
-.divSearch span {
-  font-size: 1.75rem;
-  -webkit-text-stroke-width: 1.5px;
--webkit-text-stroke-color: #000;
- color: #fffdd9;
- font-weight: 700;
+
+.divInfos{
+  width: 100%;
+  
 }
 .divLink{
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-top:1.5rem;
+  border-radius:50px;
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.4);
 }
 .divLink a{
     text-decoration: none;
     margin: 0;
     padding: 0;
     color:black;
+    
 }
+
 
 @media(max-width:1024px){
   .buttonRequest{

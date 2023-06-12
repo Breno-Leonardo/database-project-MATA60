@@ -34,7 +34,7 @@
   color: #949090;
 }
 .Input:focus {
-  outline-color: var(--green-light);
+  outline-color: var(--blue-light);
   transition: 0.2s ease-in;
 }
 

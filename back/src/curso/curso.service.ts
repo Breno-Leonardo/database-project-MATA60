@@ -33,4 +33,16 @@ export class CursoService {
     }
     return horas;
   }
+
+  async findCurso(codigo: number): Promise<CursoEntity> {
+    const curso = await this.cursoRepository.query(
+      `SELECT * FROM curso WHERE codigo=${codigo};
+      `,
+    );
+
+    if (!curso) {
+      throw new NotFoundException(`Curso ${codigo} not found`);
+    }
+    return curso[0];
+  }
 }

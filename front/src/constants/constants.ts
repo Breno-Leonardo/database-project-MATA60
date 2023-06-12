@@ -18,6 +18,14 @@ export const URL_GET_ALL_TEAMS  = URL_BASE+'/times/lista-times';
 export const URL_GET_TEAM_BY_ID  = URL_BASE+'/times/lista-times/id/';
 export const URL_CREATE_TEAM= URL_BASE+'/times/cadastro';
 
+export const URL_GET_ALUNO  = URL_BASE+'/aluno/lista-alunos';
+export const URL_GET_CURSO  = URL_BASE+'/curso';
+export const URL_GET_ALL_REQUESTS_ALUNO  = URL_BASE+'/solicitacao-aproveitamento/aluno';
+export const URL_GET_HORAS_ALUNO  = URL_BASE+'/solicitacao-aproveitamento/calcular-horas';
+export const URL_GET_HORAS_GERAIS_FALTANTES  = URL_BASE+'/solicitacao-aproveitamento/calcular-horas-gerais-faltantes';
+export const URL_GET_HORAS_EXTENSAO_FALTANTES  = URL_BASE+'/solicitacao-aproveitamento/calcular-horas-extensao-faltantes';
+export const URL_GET_ALL_REQUESTS_COORDENADOR  = URL_BASE+'/solicitacao-aproveitamento/coordenador';
+
 export const URL_GET_ALL_VACATION_REQUEST  = URL_BASE+'/solicitacao-ferias/lista-solicitacoes';
 export const URL_CREATE_VACATION_REQUEST= URL_BASE+'/solicitacao-ferias/nova-solicitacao';
 export const URL_UPDATE_VACATION_REQUEST= URL_BASE+'/solicitacao-ferias/update';

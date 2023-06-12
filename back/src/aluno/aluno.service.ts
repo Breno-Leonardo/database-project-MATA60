@@ -15,13 +15,24 @@ export class AlunoService {
   ) {}
 
   async findAlunoByMatricula(matricula: number): Promise<AlunoEntity> {
-    const aluno = await this.alunoRepository.findOne({
-      where: { matricula },
-    });
+    const aluno = await this.alunoRepository.query(
+      `Select * from aluno where matricula =${matricula}`,
+    );
     if (!aluno) {
       throw new NotFoundException(`Aluno: ${matricula} not found`);
     }
-    return aluno;
+    return aluno[0];
+  }
+  async findAlunoByMatriculaWithoutHash(
+    matricula: number,
+  ): Promise<AlunoEntity> {
+    const aluno = await this.alunoRepository.query(
+      `Select matricula,cpf, telefone, nome, email,codigo_curso from aluno where matricula =${matricula}`,
+    );
+    if (!aluno) {
+      throw new NotFoundException(`Aluno: ${matricula} not found`);
+    }
+    return aluno[0];
   }
 
   async getAllAlunos(): Promise<AlunoEntity[]> {

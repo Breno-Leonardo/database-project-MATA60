@@ -1,23 +1,16 @@
 import { Routes, Route, useRouteError } from "react-router-dom";
-import { RequestsPageManager } from "./pages/gestor/RequestsPageManager";
+import { RequestsPageManager } from "./pages/coordenador/RequestsPageManager";
 import { ErrorPage } from "./pages/ErrorPage";
-import { HistoryRequestsPageManager } from "./pages/gestor/HistoryRequestPageManager";
-import { TeamPageManager } from "./pages/gestor/TeamPageManager";
-import { ResponsePageManager } from "./pages/gestor/ResponsePageManager";
-import { RequestsPageCollaborator } from "./pages/colaborador/RequestsPageCollaborator";
-import { TeamPageCollaborator } from "./pages/colaborador/TeamPageCollaborator";
-import { HistoryRequestsPageCollaborator } from "./pages/colaborador/HistoryRequestPageCollaborator";
-import { ThirteenthPageCollaborator } from "./pages/colaborador/ThirteenthPageCollaborator";
-import { HomeRH } from "./pages/rh/HomeRH";
-import { NewRequestPage } from "./pages/colaborador/NewRequestPage";
-import { RegisterCollaboratorPage } from "./pages/rh/RegisterCollaboratorPage";
-import { CollaboratorLayout } from "./layouts/CollaboratorLayout";
-import { ManagerLayout } from "./layouts/ManagerLayout";
-import { RHLayout } from "./layouts/RHLayout";
-import { RegisterTeamPage } from "./pages/rh/RegisterTeamPage";
-import { RemovePage } from "./pages/rh/RemovePage";
+import { HistoryRequestsPageManager } from "./pages/coordenador/HistoryRequestPageManager";
+import { ResponsePageManager } from "./pages/coordenador/ResponsePageManager";
+import { RequestsPageAluno} from "./pages/aluno/RequestsPageAluno";
+
+import { NewRequestPage } from "./pages/aluno/NewRequestPage";
+
+import { AlunoLayout } from "./layouts/AlunoLayout";
+import { CoordenadorLayout } from "./layouts/CoordenadorLayout";
 import { Login } from "./pages/Login";
-import { UpdatePage } from "./pages/rh/UpdatePage";
+
 
 export function Router() {
   return (
@@ -34,14 +27,11 @@ export function Router() {
       ></Route>
 
       <Route
-        path="/gestor"
+        path="/coordenador"
         errorElement={<ErrorPage></ErrorPage>}
-        element={<ManagerLayout></ManagerLayout>}
+        element={<CoordenadorLayout></CoordenadorLayout>}
       >
-        <Route
-          path="time"
-          element={<TeamPageManager></TeamPageManager>}
-        ></Route>
+       
         <Route
           path=""
           element={<RequestsPageManager></RequestsPageManager>}
@@ -61,17 +51,13 @@ export function Router() {
       </Route>
 
       <Route
-        path="/colaborador"
-        element={<CollaboratorLayout></CollaboratorLayout>}
+        path="/aluno"
+        element={<AlunoLayout></AlunoLayout>}
         errorElement={<h1>Página não encontrada</h1>}
       >
         <Route
           path=""
-          element={<RequestsPageCollaborator></RequestsPageCollaborator>}
-        ></Route>
-        <Route
-          path="time"
-          element={<TeamPageCollaborator></TeamPageCollaborator>}
+          element={<RequestsPageAluno></RequestsPageAluno>}
         ></Route>
         <Route
           path="nova-solicitacao"
@@ -79,44 +65,11 @@ export function Router() {
         ></Route>
         <Route
           path="solicitacoes"
-          element={<RequestsPageCollaborator></RequestsPageCollaborator>}
+          element={<RequestsPageAluno></RequestsPageAluno>}
         ></Route>
-        <Route
-          path="historico"
-          element={
-            <HistoryRequestsPageCollaborator></HistoryRequestsPageCollaborator>
-          }
-        ></Route>
-        <Route
-          path="decimo-terceiro"
-          element={<ThirteenthPageCollaborator></ThirteenthPageCollaborator>}
-        ></Route>
+        
       </Route>
 
-
-      <Route
-        path="/rh"
-        errorElement={<h1>Página não encontrada</h1>}
-        element={<RHLayout></RHLayout>}
-      >
-        <Route path="" element={<HomeRH></HomeRH>}></Route>
-        <Route
-          path="cadastrar-colaborador"
-          element={<RegisterCollaboratorPage></RegisterCollaboratorPage>}
-        ></Route>
-        <Route
-          path="cadastrar-time"
-          element={<RegisterTeamPage></RegisterTeamPage>}
-        ></Route>
-        <Route
-          path="remover-colaborador"
-          element={<RemovePage></RemovePage>}
-        ></Route>
-        <Route
-          path="atualizar-colaborador"
-          element={<UpdatePage></UpdatePage>}
-        ></Route>
-      </Route>
     </>
   );
 }

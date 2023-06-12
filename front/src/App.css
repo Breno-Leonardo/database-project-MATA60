@@ -4,6 +4,7 @@
   --red: #ad1e1e;
   --red-light: #ff0000;
   --blue: #2237a9;
+  --blue-light: #337ab7;
 }
 
 * {
@@ -48,9 +49,20 @@ textarea {
   font-size: 1.5rem;
   margin-top:2rem;
 }
+input[type=number]::-webkit-inner-spin-button { 
+  -webkit-appearance: none;
+  
+}
+input[type=number] { 
+ -moz-appearance: textfield;
+ appearance: textfield;
+
+}
+
 
 @media (max-width: 1024px) {
   .content {
     background-color:white;
   }
 }
+

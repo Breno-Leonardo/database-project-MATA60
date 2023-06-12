@@ -18,8 +18,8 @@ export class AlunoController {
 
   @Roles([UserType.Aluno, UserType.Coordenador])
   @Get('lista-alunos/:matricula')
-  async getCollaboratorByRegistration(@Param('matricula') matricula) {
-    return this.alunoService.findAlunoByMatricula(matricula);
+  async getAlunoByMatricula(@Param('matricula') matricula) {
+    return this.alunoService.findAlunoByMatriculaWithoutHash(matricula);
   }
 
   @Get('lista-alunos')

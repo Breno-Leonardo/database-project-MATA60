@@ -9,7 +9,9 @@
 .Invisible{
     visibility: hidden;
 }
-
+.Blue{
+    background-color:var(--blue);
+}
 .Red{
     background-color:var(--red);
 }

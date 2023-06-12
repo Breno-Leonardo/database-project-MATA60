@@ -1,9 +1,9 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { CollaboratorTokenType } from "../types/CollaboratorTokenType";
-import { VacationRequestReturn } from "../types/ReturnVacationRequestType";
+import {createContext, useContext, useEffect, useState} from "react";
+import {UserTokenType} from "../types/UserTokenType";
+import {VacationRequestReturn} from "../types/ReturnVacationRequestType";
 
 interface GlobalData {
-  collaborator?: CollaboratorTokenType;
+  user?: UserTokenType;
   currentVacationRequest?: VacationRequestReturn;
 }
 interface GlobalContextProps {
@@ -14,50 +14,38 @@ interface GlobalContextProps {
 interface GlobalProviderProps {
   children: React.ReactNode;
 }
-const GlobalContext = createContext<GlobalContextProps>(
-  {} as GlobalContextProps
-);
+const GlobalContext = createContext<GlobalContextProps>({} as GlobalContextProps);
 
-export const GlobalProvider = ({ children }: GlobalProviderProps) => {
+export const GlobalProvider = ({children}: GlobalProviderProps) => {
   const [globalData, setGlobalData] = useState<GlobalData>({});
 
-  return (
-    <GlobalContext.Provider value={{ globalData, setGlobalData }}>
-      {children}
-    </GlobalContext.Provider>
-  );
+  return <GlobalContext.Provider value={{globalData, setGlobalData}}>{children}</GlobalContext.Provider>;
 };
 
 export const useGlobalContext = () => {
-  const { globalData, setGlobalData } = useContext(GlobalContext);
+  const {globalData, setGlobalData} = useContext(GlobalContext);
 
-  const setCollaboratorStorageContext = (
-    collaborator: CollaboratorTokenType | undefined
-  ) => {
-    if (collaborator != undefined) {
+  const setUserStorageContext = (user: UserTokenType | undefined) => {
+    if (user != undefined) {
       setGlobalData({
         ...globalData,
-        collaborator: collaborator,
+        user: user,
       });
-    }
-    else{
+    } else {
       setGlobalData({
         ...globalData,
-        collaborator: undefined,
+        user: undefined,
       });
     }
   };
 
-  const setCurrentVacationRequestStorageContext = (
-    vacationRequest: VacationRequestReturn | undefined
-  ) => {
+  const setCurrentVacationRequestStorageContext = (vacationRequest: VacationRequestReturn | undefined) => {
     if (vacationRequest != undefined) {
       setGlobalData({
         ...globalData,
         currentVacationRequest: vacationRequest,
       });
-    }
-    else{
+    } else {
       setGlobalData({
         ...globalData,
         currentVacationRequest: undefined,
@@ -66,8 +54,8 @@ export const useGlobalContext = () => {
   };
   return {
     globalData,
-    collaborator: globalData?.collaborator,
-    setCollaboratorStorageContext,
+    user: globalData?.user,
+    setUserStorageContext,
     currentVacationRequest: globalData?.currentVacationRequest,
     setCurrentVacationRequestStorageContext,
   };

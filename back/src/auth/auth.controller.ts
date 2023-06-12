@@ -25,8 +25,13 @@ export class AuthController {
   @UsePipes(ValidationPipe)
   @Post('login')
   async login(@Body() loginDto: LoginDto): Promise<ReturnLoginDto> {
-    const p = await hash('123', 10);
-    console.log(p);
+    //const p = await hash('123', 10);
+    //console.log(p);
     return await this.authService.login(loginDto);
+  }
+
+  @Get('check')
+  async check(@Headers() headers): Promise<void> {
+    return await this.authService.checkToken(headers.authorization);
   }
 }

@@ -1,6 +1,6 @@
 export class ReturnLoginDto {
   matricula: number;
   nome: string;
-  typeCollaborator: number;
+  typeUser: number;
   acessToken: string;
 }

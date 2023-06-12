@@ -3,7 +3,7 @@ import styles from "./css/Buton.module.css";
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   content: string;
   size: "ExtraBig" | "Big" | "Medium" | "Small";
-  color?: "Green" | "Red";
+  color?: "Green" | "Red" | "Blue";
   visibility?: "Visible" | "Invisible";
 }
 

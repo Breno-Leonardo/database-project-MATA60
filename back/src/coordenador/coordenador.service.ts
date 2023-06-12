@@ -15,12 +15,24 @@ export class CoordenadorService {
   async findCoordenadorByMatricula(
     matricula_siape: number,
   ): Promise<CoordenadorEntity> {
-    const coordenador = await this.coordenadorRepository.findOne({
-      where: { matricula_siape },
-    });
+    const coordenador = await this.coordenadorRepository.query(
+      `Select * from Coordenador where matricula_siape=${matricula_siape}`,
+    );
     if (!coordenador) {
       throw new NotFoundException(`Coordenador: ${matricula_siape} not found`);
     }
-    return coordenador;
+    return coordenador[0];
+  }
+
+  async findCoordenadorByMatriculaWithoutHash(
+    matricula_siape: number,
+  ): Promise<CoordenadorEntity> {
+    const coordenador = await this.coordenadorRepository.query(
+      `Select nome, email from Coordenador where matricula_siape=${matricula_siape}`,
+    );
+    if (!coordenador) {
+      throw new NotFoundException(`Coordenador: ${matricula_siape} not found`);
+    }
+    return coordenador[0];
   }
 }

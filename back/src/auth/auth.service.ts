@@ -17,21 +17,42 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
   async login(loginDto: LoginDto): Promise<ReturnLoginDto> {
-    let typeCollaborator = 0;
+    let typeUser = 0;
 
     const coordenador: CoordenadorEntity | undefined =
       await this.coordenadorService
         .findCoordenadorByMatricula(loginDto.matricula)
         .catch(() => undefined);
+
     if (coordenador) {
-      typeCollaborator = UserType.Coordenador;
+      typeUser = UserType.Coordenador;
+      const isMatch = await compare(
+        loginDto.senha,
+        coordenador?.hash_senha?.trim() || '',
+      );
+      if (!coordenador || !isMatch) {
+        throw new NotFoundException(`Matricula ou senha invalida`);
+      }
+      return {
+        matricula: coordenador.matricula_siape,
+        nome: coordenador.nome,
+        typeUser: typeUser,
+
+        acessToken: this.jwtService.sign({
+          ...{
+            matricula: coordenador.matricula_siape,
+            nome: coordenador.nome,
+            typeUser: typeUser,
+          },
+        }),
+      };
     } else {
       const aluno: AlunoEntity | undefined = await this.alunoService
         .findAlunoByMatricula(loginDto.matricula)
         .catch(() => undefined);
 
       if (aluno) {
-        typeCollaborator = UserType.Aluno;
+        typeUser = UserType.Aluno;
       }
 
       const isMatch = await compare(
@@ -44,30 +65,42 @@ export class AuthService {
       return {
         matricula: aluno.matricula,
         nome: aluno.nome,
-        typeCollaborator: typeCollaborator,
+        typeUser: typeUser,
 
         acessToken: this.jwtService.sign({
           ...{
             matricula: aluno.matricula,
             nome: aluno.nome,
-            typeCollaborator: typeCollaborator,
+            typeUser: typeUser,
           },
         }),
       };
     }
+  }
 
-    return {
-      matricula: coordenador.matricula_siape,
-      nome: coordenador.nome,
-      typeCollaborator: typeCollaborator,
-
-      acessToken: this.jwtService.sign({
-        ...{
-          matricula: coordenador.matricula_siape,
-          nome: coordenador.nome,
-          typeCollaborator: typeCollaborator,
-        },
-      }),
-    };
+  async checkToken(token: string): Promise<any> {
+    const decode: any = this.jwtService.decode(token);
+    if (decode.typeUser == UserType.Aluno) {
+      let alunoReturn = await this.alunoService
+        .findAlunoByMatricula(decode.matricula)
+        .catch(() => undefined);
+      alunoReturn = {
+        matricula: alunoReturn.matricula,
+        nome: alunoReturn.nome,
+        typeUser: decode.typeUser,
+      };
+      return alunoReturn;
+    } else if (decode.typeUser == UserType.Coordenador) {
+      let coordenadorReturn = await this.coordenadorService
+        .findCoordenadorByMatricula(decode.matricula)
+        .catch(() => undefined);
+      coordenadorReturn = {
+        matricula: coordenadorReturn.matricula_siape,
+        nome: coordenadorReturn.nome,
+        typeUser: decode.typeUser,
+      };
+      return coordenadorReturn;
+    }
+    return decode;
   }
 }

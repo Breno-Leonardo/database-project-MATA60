@@ -17,6 +17,17 @@ export function formatNameForMobile(name: string): string {
   return name;
 }
 
+export function formatTipoCarga(name: string): string {
+  
+  if (name=="G") {
+    return "Geral";
+  }
+  else if (name=="E") {
+    return "Extensão";
+  }
+  return name;
+}
+
 export function formatName(name: string): string {
   const names = name.split(" ");
   if (names.length >= 2) {

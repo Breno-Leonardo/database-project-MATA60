@@ -13,6 +13,11 @@ import { CursoService } from './curso.service';
 export class CursoController {
   constructor(private readonly cursoService: CursoService) {}
 
+  @Get(':codigo')
+  async getCurso(@Param('codigo') id) {
+    return this.cursoService.findCurso(id);
+  }
+
   @Get('horas-extensao/:codigo')
   async getTotalHorasExtensaoByCurso(@Param('codigo') id) {
     return this.cursoService.findTotalHorasExtensaoByCurso(id);
