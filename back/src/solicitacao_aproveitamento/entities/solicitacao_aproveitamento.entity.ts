@@ -1,11 +1,13 @@
 import { AlunoEntity } from 'src/aluno/entities/aluno.entity';
 import { CoordenadorEntity } from 'src/coordenador/entities/coordenador.entity';
+import { SupervisorEntity } from 'src/supervisor/entities/supervisor.entity';
 import { TipoAtividadeEntity } from 'src/tipo_atividade/entities/tipo_atividade.entity';
 
 import {
   Entity,
   Column,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   JoinColumn,
@@ -16,7 +18,17 @@ export class SolicitacaoAproveitamentoEntity {
   @PrimaryGeneratedColumn('rowid')
   id: number;
 
-  @Column({ name: 'mensagem_colaborador', nullable: false })
+  @Column({ name: 'resposta_coordenador', nullable: false })
+  resposta: string;
+
+  @CreateDateColumn({
+    name: 'data_da_solicitacao',
+    nullable: false,
+    type: 'date',
+  })
+  dataSolicitacao: Date;
+
+  @Column({ name: 'descricao', nullable: false })
   descricao: string;
 
   @Column({ name: 'situacao', nullable: false })
@@ -64,4 +76,14 @@ export class SolicitacaoAproveitamentoEntity {
     referencedColumnName: 'matricula_siape',
   })
   matricula_coordenador: CoordenadorEntity;
+
+  @OneToOne(() => SupervisorEntity, (supervisor) => supervisor.id, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({
+    name: 'id_supervisor',
+    referencedColumnName: 'id',
+  })
+  supervisor: SupervisorEntity;
 }

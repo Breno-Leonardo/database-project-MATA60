@@ -21,6 +21,9 @@ import { CoordenadorEntity } from './coordenador/entities/coordenador.entity';
 import { SolicitacaoAproveitamentoEntity } from './solicitacao_aproveitamento/entities/solicitacao_aproveitamento.entity';
 import { TipoAtividadeEntity } from './tipo_atividade/entities/tipo_atividade.entity';
 import { AnexoEntity } from './anexo/entities/anexo.entity';
+import { SupervisorEntity } from './supervisor/entities/supervisor.entity';
+import { SupervisorModule } from './supervisor/supervisor.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -40,6 +43,7 @@ import { AnexoEntity } from './anexo/entities/anexo.entity';
           CursoEntity,
           AlunoEntity,
           CoordenadorEntity,
+          SupervisorEntity,
           SolicitacaoAproveitamentoEntity,
           TipoAtividadeEntity,
           AnexoEntity,
@@ -55,6 +59,7 @@ import { AnexoEntity } from './anexo/entities/anexo.entity';
     SolicitacaoAproveitamentoModule,
     TipoAtividadeModule,
     AnexoModule,
+    SupervisorModule,
     AuthModule,
     JwtModule,
   ],

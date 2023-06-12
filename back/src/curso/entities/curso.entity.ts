@@ -1,5 +1,5 @@
 import { CoordenadorEntity } from 'src/coordenador/entities/coordenador.entity';
-import { Entity, Column, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToOne, JoinColumn } from 'typeorm';
 
 @Entity({ name: 'curso' })
 export class CursoEntity {
@@ -9,7 +9,7 @@ export class CursoEntity {
   @Column({ name: 'nome', nullable: false })
   nome: string;
 
-  @ManyToOne(
+  @OneToOne(
     () => CoordenadorEntity,
     (coordenador) => coordenador.matricula_siape,
     {

@@ -9,6 +9,9 @@ export class AlunoEntity {
   @Column({ name: 'nome', nullable: false })
   nome: string;
 
+  @Column({ name: 'sobrenome', nullable: false })
+  sobrenome: string;
+
   @Column({ name: 'cpf', nullable: false })
   cpf: string;
 

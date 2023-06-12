@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AnexoEntity } from './entities/anexo.entity';
 import { AnexoController } from './anexo.controller';
 import { AnexoService } from './anexo.service';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -13,6 +14,9 @@ import { AnexoService } from './anexo.service';
         secret: process.env.JWT_SECRET,
         signOptions: { expiresIn: process.env.JWT_TIME_EXPIRES },
       }),
+    }),
+    MulterModule.register({
+      dest: './uploads',
     }),
   ],
   controllers: [AnexoController],

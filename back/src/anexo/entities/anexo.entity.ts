@@ -2,23 +2,26 @@ import { SolicitacaoAproveitamentoEntity } from 'src/solicitacao_aproveitamento/
 
 import {
   Entity,
+  Column,
   ManyToOne,
   PrimaryColumn,
   CreateDateColumn,
   JoinColumn,
 } from 'typeorm';
 
-@Entity({ name: 'solicitacao_decimo_terceiro' })
+@Entity({ name: 'anexo' })
 export class AnexoEntity {
   @PrimaryColumn({ name: 'num' })
   num: number;
 
-  @CreateDateColumn({
-    name: 'data_da_solicitacao',
-    nullable: false,
-    type: 'date',
-  })
-  dataSolicitacao: Date;
+  @Column({ name: 'nome', nullable: false })
+  nome: string;
+
+  @Column({ name: 'extensao', nullable: false })
+  extensao: string;
+
+  @Column({ name: 'caminho', nullable: false })
+  caminho: string;
 
   @ManyToOne(
     () => SolicitacaoAproveitamentoEntity,
@@ -32,6 +35,6 @@ export class AnexoEntity {
     name: 'solicitacao_id',
     referencedColumnName: 'id',
   })
-  @PrimaryColumn()
+  @PrimaryColumn({ name: 'solicitacao_id' })
   solicitacao_id: SolicitacaoAproveitamentoEntity;
 }

@@ -18,6 +18,9 @@ export class TipoAtividadeEntity {
   @Column({ name: 'horas', nullable: true })
   horas: number;
 
+  @Column({ name: 'requer_supervisor', nullable: true })
+  requerSupervisor: boolean;
+
   @ManyToOne(() => CursoEntity, (curso) => curso.codigo, {
     nullable: false,
     onDelete: 'CASCADE',

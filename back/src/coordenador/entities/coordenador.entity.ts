@@ -8,6 +8,9 @@ export class CoordenadorEntity {
   @Column({ name: 'nome', nullable: false })
   nome: string;
 
+  @Column({ name: 'sobrenome', nullable: false })
+  sobrenome: string;
+
   @Column({ name: 'hash_senha', nullable: false })
   hash_senha: string;
 

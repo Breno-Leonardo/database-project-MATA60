@@ -24,4 +24,22 @@ export class AnexoService {
     }
     return anexos;
   }
+
+  async createAnexo(
+    num,
+    nome,
+    tipo,
+    path,
+    solicitacaoId,
+  ): Promise<AnexoEntity> {
+    return this.anexoRepository.save({
+      num: num,
+      nome: nome,
+      extensao: tipo,
+      caminho: path,
+      solicitacao_id: solicitacaoId,
+    });
+
+    return;
+  }
 }
