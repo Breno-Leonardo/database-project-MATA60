@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { createTables1678662502071 } from './migration/1678662502071-createTables';
-import { initialData1678664119697 } from './migration/1678664119697-initial_data';
+import { initialDataCoordenador1678662502072 } from './migration/initial_data_coordenador';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './guards/roles.guards';
@@ -24,6 +24,19 @@ import { AnexoEntity } from './anexo/entities/anexo.entity';
 import { SupervisorEntity } from './supervisor/entities/supervisor.entity';
 import { SupervisorModule } from './supervisor/supervisor.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { initialDataSolicitacao1678662502077 } from './migration/initial_data_solicitacao1';
+import { initialDataAluno1678662502074 } from './migration/initial_data_aluno';
+import { initialDataAtividade1678662502075 } from './migration/initial_data_atividade';
+import { initialDataCurso1678662502073 } from './migration/initial_data_curso';
+import { initialDataSupervisor1678662502076 } from './migration/initial_data_supervisor';
+import { initialDataAnexo1678662502085 } from './migration/initial_data_anexo';
+import { initialDataSolicitacao1678662502078 } from './migration/initial_data_solicitacao2';
+import { initialDataSolicitacao1678662502079 } from './migration/initial_data_solicitacao3';
+import { initialDataSolicitacao1678662502080 } from './migration/initial_data_solicitacao4';
+import { initialDataSolicitacao1678662502081 } from './migration/initial_data_solicitacao5';
+import { initialDataSolicitacao1678662502082 } from './migration/initial_data_solicitacao6';
+import { initialDataSolicitacao1678662502083 } from './migration/initial_data_solicitacao7';
+import { initialDataSolicitacao1678662502084 } from './migration/initial_data_solicitacao8';
 
 @Module({
   imports: [
@@ -48,7 +61,22 @@ import { MulterModule } from '@nestjs/platform-express';
           TipoAtividadeEntity,
           AnexoEntity,
         ],
-        migrations: [createTables1678662502071, initialData1678664119697],
+        migrations: [
+          createTables1678662502071,
+          initialDataCoordenador1678662502072,
+          initialDataCurso1678662502073,
+          initialDataAluno1678662502074,
+          initialDataAtividade1678662502075,
+          initialDataSupervisor1678662502076,
+          initialDataSolicitacao1678662502077,
+          initialDataSolicitacao1678662502078,
+          // initialDataSolicitacao1678662502080,
+          // initialDataSolicitacao1678662502081,
+          // initialDataSolicitacao1678662502082,
+          // initialDataSolicitacao1678662502083,
+          // initialDataSolicitacao1678662502084,
+          // initialDataAnexo1678662502085,
+        ],
         migrationsRun: true,
         // synchronize: true,
       }),

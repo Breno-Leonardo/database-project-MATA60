@@ -4,8 +4,6 @@ import {EmployeeLine} from "../../components/EmployeeLine";
 import {Button} from "../../components/Button";
 import {Card} from "../../components/Card";
 import {Link} from "react-router-dom";
-import {Gantt, Task, ViewMode} from "gantt-task-react";
-import "gantt-task-react/dist/index.css";
 import {StandardTooltipContent} from "../../components/Tooltip";
 import {Select} from "../../components/Select";
 import {Topics} from "../../components/Topics";

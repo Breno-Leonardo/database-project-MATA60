@@ -29,7 +29,7 @@ export function Header({forWho}: HeaderProps) {
       <header className={styles.header}>
         <img className={styles.logo} src={logo}></img>
 
-        <Link to="/colaborador/solicitacoes">
+        <Link to="/aluno/solicitacoes">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={calendar}></img>
             <span>Solicitações</span>

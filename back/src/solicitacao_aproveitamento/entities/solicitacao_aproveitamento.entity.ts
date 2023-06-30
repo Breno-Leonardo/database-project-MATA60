@@ -37,17 +37,8 @@ export class SolicitacaoAproveitamentoEntity {
   @Column({ name: 'carga_real', nullable: false })
   carga_real: number;
 
-  @Column({ name: 'carga_aproveitada', nullable: false })
+  @Column({ name: 'carga_aproveitada', nullable: true })
   carga_aproveitada: number;
-
-  @Column({ name: 'nome_supevisor', nullable: false })
-  nome_supevisor: string;
-
-  @Column({ name: 'tel_supevisor', nullable: false })
-  tel_supevisor: string;
-
-  @Column({ name: 'email_supevisor', nullable: false })
-  email_supevisor: string;
 
   @ManyToOne(() => TipoAtividadeEntity, (tipo_atividade) => tipo_atividade.id, {
     nullable: false,

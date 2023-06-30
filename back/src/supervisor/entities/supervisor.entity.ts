@@ -8,7 +8,7 @@ export class SupervisorEntity {
   @Column({ name: 'nome', nullable: false })
   nome: string;
 
-  @Column({ name: 'sobrenome', nullable: false })
+  @Column({ name: 'sobrenome', nullable: true })
   sobrenome: string;
 
   @Column({ name: 'email', nullable: false })

@@ -14,8 +14,16 @@ export class TipoAtividadeService {
 
   async findAtividadesByCurso(codigo: number): Promise<TipoAtividadeEntity> {
     const atividades = await this.tipoAtividadeRepository.query(
-      `SELECT id, nome, tipo_carga_horaria, limite_horas, horas FROM
-      tipo_atividade WHERE codigo_curso=${codigo};
+      `SELECT
+      id,
+      nome,
+      tipo_carga_horaria,
+      limite_horas,
+      horas,
+      requer_supervisor
+    FROM
+      tipo_atividade
+     WHERE codigo_curso=${codigo};
       `,
     );
 
@@ -30,8 +38,16 @@ export class TipoAtividadeService {
     tipo: string,
   ): Promise<TipoAtividadeEntity> {
     const atividades = await this.tipoAtividadeRepository.query(
-      `SELECT id, nome, tipo_carga_horaria, limite_horas, horas FROM
-      tipo_atividade WHERE codigo_curso=${codigo} AND tipo_carga_horaria='${tipo}';
+      `SELECT
+      id,
+      nome,
+      tipo_carga_horaria,
+      limite_horas,
+      horas,
+      requer_supervisor
+    FROM
+      tipo_atividade
+    WHERE codigo_curso=${codigo} AND tipo_carga_horaria='${tipo}';
       `,
     );
 

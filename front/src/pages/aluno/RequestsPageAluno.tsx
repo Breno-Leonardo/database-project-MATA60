@@ -1,19 +1,32 @@
-import {Container} from "../../components/Container";
+import { Container } from "../../components/Container";
 import styles from "./css/RequestsPageAluno.module.css";
-import {EmployeeLine} from "../../components/EmployeeLine";
-import {Button} from "../../components/Button";
-import {Card} from "../../components/Card";
-import {Link} from "react-router-dom";
-import {Topics} from "../../components/Topics";
-import {formatDate, formatDateRequestTopic, formatTipoCarga, isAttentionFlag} from "../../functions/auxFunctions";
-import {useGlobalContext} from "../../hooks/useGlobalContext";
-import {useRequests} from "../../hooks/useRequests";
-import {useEffect, useState} from "react";
-import {URL_GET_ALL_REQUESTS_ALUNO, URL_GET_ALUNO, URL_GET_CURSO, URL_GET_HORAS_ALUNO, URL_GET_HORAS_EXTENSAO_FALTANTES, URL_GET_HORAS_GERAIS_FALTANTES} from "../../constants/constants";
+import { EmployeeLine } from "../../components/EmployeeLine";
+import { Button } from "../../components/Button";
+import { Card } from "../../components/Card";
+import { Link } from "react-router-dom";
+import { Topics } from "../../components/Topics";
+import {
+  formatDate,
+  formatDateForUTC,
+  formatDateRequestTopic,
+  formatTipoCarga,
+  isAttentionFlag,
+} from "../../functions/auxFunctions";
+import { useGlobalContext } from "../../hooks/useGlobalContext";
+import { useRequests } from "../../hooks/useRequests";
+import { useEffect, useState } from "react";
+import {
+  URL_GET_ALL_REQUESTS_ALUNO,
+  URL_GET_ALUNO,
+  URL_GET_CURSO,
+  URL_GET_HORAS_ALUNO,
+  URL_GET_HORAS_EXTENSAO_FALTANTES,
+  URL_GET_HORAS_GERAIS_FALTANTES,
+} from "../../constants/constants";
 
 export function RequestsPageAluno() {
-  const {user} = useGlobalContext();
-  const {getRequest} = useRequests();
+  const { user } = useGlobalContext();
+  const { getRequest } = useRequests();
   const [requests, setRequests] = useState<[]>();
   const [loading, setLoading] = useState(true);
   const [horasGerais, setHorasGerais] = useState("0");
@@ -33,7 +46,8 @@ export function RequestsPageAluno() {
       await getRequest(URL_GET_HORAS_ALUNO + "/" + user?.matricula)
         .then((result: any) => {
           for (let i = 0; i < result.length; i++) {
-            if (result[i].tipo_carga_horaria == "E") setHorasExtensao(result[i].total);
+            if (result[i].tipo_carga_horaria == "E")
+              setHorasExtensao(result[i].total);
             else setHorasGerais(result[i].total);
           }
         })
@@ -47,14 +61,12 @@ export function RequestsPageAluno() {
               .then((result: any) => {
                 getRequest(URL_GET_CURSO + "/" + result.codigo_curso)
                   .then((result2: any) => {
-                    setHorasGeraisFaltantes(result2.horas_gerais);
+                    setHorasGeraisFaltantes(Math.max(0, result2.horas_gerais).toString());
                   })
                   .catch(() => {});
               })
               .catch(() => {});
-          } 
-          else
-           setHorasGeraisFaltantes(result[0].horas_faltantes);
+          } else setHorasGeraisFaltantes(Math.max(0, result[0].horas_faltantes).toString());
         })
         .catch(() => {});
 
@@ -66,14 +78,12 @@ export function RequestsPageAluno() {
               .then((result: any) => {
                 getRequest(URL_GET_CURSO + "/" + result.codigo_curso)
                   .then((result2: any) => {
-                    setHorasExtensaoFaltantes(result2.horas_extensao);
+                    setHorasExtensaoFaltantes(Math.max(0, result2.horas_extensao).toString());
                   })
                   .catch(() => {});
               })
               .catch(() => {});
-          }
-          else
-            setHorasExtensaoFaltantes(result[0].horas_faltantes);
+          } else setHorasExtensaoFaltantes( Math.max(0, result[0].horas_faltantes).toString());
         })
         .catch(() => {});
 
@@ -84,16 +94,36 @@ export function RequestsPageAluno() {
       getHorasGeraisFaltantes();
     }
   }, [user]);
-  
+
   return (
     <>
       {user != undefined ? (
         <>
           <div className={styles.divCards}>
-            <Card content={horasExtensao} size="Medium" color="Blue" title="Horas Extensão"></Card>
-            <Card content={horasExtensaoFaltantes} size="Medium" color="Blue" title="Extensão Faltante"></Card>
-            <Card content={horasGerais} size="Medium" color="Blue" title="Horas Gerais"></Card>
-            <Card content={horasGeraisFaltantes} size="Medium" color="Blue" title="Gerais Faltante"></Card>
+            <Card
+              content={horasExtensao}
+              size="Medium"
+              color="Blue"
+              title="Horas Extensão"
+            ></Card>
+            <Card
+              content={horasExtensaoFaltantes}
+              size="Medium"
+              color="Blue"
+              title="Extensão Faltante"
+            ></Card>
+            <Card
+              content={horasGerais}
+              size="Medium"
+              color="Blue"
+              title="Horas Gerais"
+            ></Card>
+            <Card
+              content={horasGeraisFaltantes}
+              size="Medium"
+              color="Blue"
+              title="Gerais Faltante"
+            ></Card>
           </div>
         </>
       ) : (
@@ -101,13 +131,25 @@ export function RequestsPageAluno() {
       )}
 
       <Container loading={loading} title="Solicitações">
-      {requests != undefined && requests.length > 0 ? <Topics fields={[ "Atividade", "Carga", "Status"]} position="center"></Topics> : <div className="noInformation">Sem Solicitações</div>}
+        {requests != undefined && requests.length > 0 ? (
+          <Topics
+            fields={["Data","Atividade", "Carga", "Status"]}
+            position="center"
+          ></Topics>
+        ) : (
+          <div className="noInformation">Sem Solicitações</div>
+        )}
 
         {requests != undefined ? (
           requests.map((soli: any) => {
             return (
               <EmployeeLine
-                fields={[soli.nome_atividade,formatTipoCarga(soli.tipo_carga_horaria) ,soli.situacao ]}
+                fields={[
+                  formatDate(soli.data_da_solicitacao),
+                  soli.nome_atividade,
+                  formatTipoCarga(soli.tipo_carga_horaria),
+                  soli.situacao,
+                ]}
                 colorsFields={["black", "black", "blue"]}
                 position="center"
                 hasIcon={false}
