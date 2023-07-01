@@ -29,7 +29,7 @@ import { initialDataAluno1678662502074 } from './migration/initial_data_aluno';
 import { initialDataAtividade1678662502075 } from './migration/initial_data_atividade';
 import { initialDataCurso1678662502073 } from './migration/initial_data_curso';
 import { initialDataSupervisor1678662502076 } from './migration/initial_data_supervisor';
-import { initialDataAnexo1678662502085 } from './migration/initial_data_anexo';
+import { initialDataAnexo1678662502088 } from './migration/initial_data_anexo';
 import { initialDataSolicitacao1678662502078 } from './migration/initial_data_solicitacao2';
 import { initialDataSolicitacao1678662502079 } from './migration/initial_data_solicitacao3';
 import { initialDataSolicitacao1678662502080 } from './migration/initial_data_solicitacao4';
@@ -37,6 +37,9 @@ import { initialDataSolicitacao1678662502081 } from './migration/initial_data_so
 import { initialDataSolicitacao1678662502082 } from './migration/initial_data_solicitacao6';
 import { initialDataSolicitacao1678662502083 } from './migration/initial_data_solicitacao7';
 import { initialDataSolicitacao1678662502084 } from './migration/initial_data_solicitacao8';
+import { initialDataSolicitacao1678662502085 } from './migration/initial_data_solicitacao9';
+import { initialDataSolicitacao1678662502086 } from './migration/initial_data_solicitacao10';
+import { initialDataChanges1678662502089 } from './migration/initial_data_changes';
 
 @Module({
   imports: [
@@ -70,12 +73,16 @@ import { initialDataSolicitacao1678662502084 } from './migration/initial_data_so
           initialDataSupervisor1678662502076,
           initialDataSolicitacao1678662502077,
           initialDataSolicitacao1678662502078,
-          // initialDataSolicitacao1678662502080,
-          // initialDataSolicitacao1678662502081,
-          // initialDataSolicitacao1678662502082,
-          // initialDataSolicitacao1678662502083,
-          // initialDataSolicitacao1678662502084,
-          // initialDataAnexo1678662502085,
+          initialDataSolicitacao1678662502079,
+          initialDataSolicitacao1678662502080,
+          initialDataSolicitacao1678662502081,
+          initialDataSolicitacao1678662502082,
+          initialDataSolicitacao1678662502083,
+          initialDataSolicitacao1678662502084,
+          initialDataSolicitacao1678662502085,
+          initialDataSolicitacao1678662502086,
+          //initialDataAnexo1678662502088,
+          initialDataChanges1678662502089,
         ],
         migrationsRun: true,
         // synchronize: true,

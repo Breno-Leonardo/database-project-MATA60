@@ -821,8 +821,8 @@ export class initialDataCoordenador1678662502072 implements MigrationInterface {
       (36090, 'Tim', 'Wood', 'oxassgAJulPKDHLbJkLbjLKaCNTETeRLhFxQvobWigJeoDtfLsBzAtBvMzrGWybW', 'W5u7a830_t96o5n61N2@ufba.br'),
       (51839, 'Emir', 'Dom?nguez', 'urefLMXfrNyBUcpSDIikdPWABnZjvSJVCIORYVOfZIKcSIUvWtBQbznUDPZgFjOh', 'b0r33z6_0XM76X6TkE@ufba.br');
     /*!40000 ALTER TABLE "coordenador" ENABLE KEYS */;
-    UPDATE  coordenador 
-    SET hash_senha= '$2b$10$4lWiIhIeBZtSbKa5pI07xetNfkftFwT.ZfB2ahbVGeL4jJoLq9s1m' ;
+    
+    
         `);
   }
 

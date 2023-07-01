@@ -13,7 +13,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-@Entity({ name: 'solicitacao_ferias' })
+@Entity({ name: 'solicitacao_aproveitamento' })
 export class SolicitacaoAproveitamentoEntity {
   @PrimaryGeneratedColumn('rowid')
   id: number;
@@ -44,7 +44,7 @@ export class SolicitacaoAproveitamentoEntity {
     nullable: false,
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'tipo_atividade', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'id_tipo', referencedColumnName: 'id' })
   id_tipo: TipoAtividadeEntity;
 
   @ManyToOne(() => AlunoEntity, (aluno) => aluno.matricula, {
@@ -63,18 +63,18 @@ export class SolicitacaoAproveitamentoEntity {
     },
   )
   @JoinColumn({
-    name: 'matricula_siape',
+    name: 'matricula_coordenador',
     referencedColumnName: 'matricula_siape',
   })
   matricula_coordenador: CoordenadorEntity;
 
   @OneToOne(() => SupervisorEntity, (supervisor) => supervisor.id, {
-    nullable: false,
+    nullable: true,
     onDelete: 'CASCADE',
   })
   @JoinColumn({
     name: 'id_supervisor',
     referencedColumnName: 'id',
   })
-  supervisor: SupervisorEntity;
+  id_supervisor: SupervisorEntity;
 }

@@ -94,4 +94,14 @@ export class SolicitacaoAproveitamentoController {
       tipo,
     );
   }
+
+  @Get('atividades/horas-restantes/:matricula')
+  async getTotalRestanteByAtividade(@Param('matricula') matricula) {
+    return this.solicitacaoAproveitamentoService.calculateHoursType(matricula);
+  }
+
+  @Post('criar')
+  async postSolicitacao(@Body() body: any) {
+    return this.solicitacaoAproveitamentoService.createSolicitacao(body);
+  }
 }

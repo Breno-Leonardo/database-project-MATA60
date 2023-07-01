@@ -58,7 +58,7 @@ CREATE TABLE solicitacao_aproveitamento (
  resposta_coordenador       varchar(4000),
  data_da_solicitacao        date NOT NULL DEFAULT now(),
  situacao 				    varchar(20) NOT NULL,
- carga_real 			    integer NOT NULL,
+ carga_real 			    integer ,
  carga_aproveitada 		    integer,
  matricula_aluno 		    integer NOT NULL REFERENCES aluno(matricula),
  matricula_coordenador 	    integer REFERENCES coordenador(matricula_siape),

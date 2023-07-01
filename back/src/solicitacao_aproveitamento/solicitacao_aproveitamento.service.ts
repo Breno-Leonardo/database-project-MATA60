@@ -35,7 +35,7 @@ export class SolicitacaoAproveitamentoService {
     situacao: string,
   ): Promise<SolicitacaoAproveitamentoEntity> {
     const solicitacoes = await this.solicitacaoAproveitamentoRepository.query(
-      `SSELECT S.id, S.situacao, S.data_da_solicitacao, T.nome AS nome_atividade, T.tipo_carga_horaria, A.matricula, A.nome FROM solicitacao_aproveitamento AS S INNER JOIN tipo_atividade AS T ON S.id_tipo=T.id INNER JOIN aluno AS A ON S.matricula_aluno=A.matricula INNER JOIN curso AS C ON C.codigo=T.codigo_curso WHERE
+      `SELECT S.id, S.situacao, S.data_da_solicitacao, T.nome AS nome_atividade, T.tipo_carga_horaria, A.matricula, A.nome FROM solicitacao_aproveitamento AS S INNER JOIN tipo_atividade AS T ON S.id_tipo=T.id INNER JOIN aluno AS A ON S.matricula_aluno=A.matricula INNER JOIN curso AS C ON C.codigo=T.codigo_curso WHERE
       C.matricula_coordenador=${matricula_siape} AND S.situacao='${situacao}';
       `,
     );
@@ -118,23 +118,23 @@ export class SolicitacaoAproveitamentoService {
   async calculateHoursAlunoByMatricula(
     matricula: number,
   ): Promise<SolicitacaoAproveitamentoEntity> {
-    const aluno = await this.solicitacaoAproveitamentoRepository
+    const result = await this.solicitacaoAproveitamentoRepository
       .query(`SELECT tipo_atividade.tipo_carga_horaria, SUM(carga_aproveitada) AS Total
       FROM solicitacao_aproveitamento INNER JOIN tipo_atividade ON
       solicitacao_aproveitamento.id_tipo=tipo_atividade.id WHERE
       matricula_aluno=${matricula} AND situacao='Aprovada' GROUP BY
       tipo_atividade.tipo_carga_horaria;
     `);
-    if (!aluno) {
+    if (!result) {
       throw new NotFoundException(`Aluno: ${matricula} not found`);
     }
-    return aluno;
+    return result;
   }
 
   async calculateMissingExtensionHoursAlunoByMatricula(
     matricula: number,
   ): Promise<SolicitacaoAproveitamentoEntity> {
-    const aluno = await this.solicitacaoAproveitamentoRepository
+    const result = await this.solicitacaoAproveitamentoRepository
       .query(`SELECT horas_extensao - (SELECT SUM(carga_aproveitada) FROM
       solicitacao_aproveitamento INNER JOIN tipo_atividade ON
       solicitacao_aproveitamento.id_tipo=tipo_atividade.id WHERE
@@ -142,16 +142,16 @@ export class SolicitacaoAproveitamentoService {
       tipo_carga_horaria='E') AS horas_faltantes FROM curso INNER JOIN aluno
       ON curso.codigo=aluno.codigo_curso WHERE aluno.matricula=${matricula};
     `);
-    if (!aluno) {
+    if (!result) {
       throw new NotFoundException(`Aluno: ${matricula} not found`);
     }
-    return aluno;
+    return result;
   }
 
   async calculateMissingGeneralHoursAlunoByMatricula(
     matricula: number,
   ): Promise<SolicitacaoAproveitamentoEntity> {
-    const aluno = await this.solicitacaoAproveitamentoRepository
+    const result = await this.solicitacaoAproveitamentoRepository
       .query(`SELECT horas_gerais - (SELECT SUM(carga_aproveitada) FROM
       solicitacao_aproveitamento INNER JOIN tipo_atividade ON
       solicitacao_aproveitamento.id_tipo=tipo_atividade.id WHERE
@@ -159,9 +159,55 @@ export class SolicitacaoAproveitamentoService {
       tipo_carga_horaria='G') AS horas_faltantes FROM curso INNER JOIN aluno
       ON curso.codigo=aluno.codigo_curso WHERE aluno.matricula=${matricula};
     `);
-    if (!aluno) {
+    if (!result) {
       throw new NotFoundException(`Aluno: ${matricula} not found`);
     }
-    return aluno;
+    return result;
+  }
+
+  async calculateHoursType(
+    matricula: number,
+  ): Promise<SolicitacaoAproveitamentoEntity> {
+    const result = await this.solicitacaoAproveitamentoRepository.query(`SELECT
+  T.id,
+  T.nome,
+  t.limite_horas - SUM(carga_aproveitada) AS restantes
+FROM
+  solicitacao_aproveitamento AS S
+  INNER JOIN tipo_atividade AS T ON S.id_tipo = T.id
+WHERE
+  (S.matricula_aluno = ${matricula}
+  AND S.situacao = 'Aprovada')
+GROUP BY
+  T.id
+
+
+UNION
+
+
+SELECT id, nome, 0 FROM tipo_atividade WHERE codigo_curso IN (SELECT
+      codigo_curso
+    FROM
+      aluno
+    WHERE
+      matricula = ${matricula})
+      AND id NOT IN (SELECT
+  T.id
+FROM
+  solicitacao_aproveitamento AS S
+  INNER JOIN tipo_atividade AS T ON S.id_tipo = T.id
+WHERE
+  (S.matricula_aluno = ${matricula}
+  AND S.situacao = 'Aprovada'))
+ORDER BY id;
+    `);
+    if (!result) {
+      throw new NotFoundException(`Aluno: ${matricula} not found`);
+    }
+    return result;
+  }
+
+  async createSolicitacao(body: any): Promise<SolicitacaoAproveitamentoEntity> {
+    return this.solicitacaoAproveitamentoRepository.save({ ...body });
   }
 }
