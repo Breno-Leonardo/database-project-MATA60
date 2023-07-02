@@ -47,8 +47,9 @@ export class AnexoController {
     //console.log(file);
   }
 
-  @Get('upload/:anexopath')
-  seeUploadedFile(@Param('anexopath') file, @Res() res) {
-    return res.sendFile(file, { root: 'uploads' });
+  @Get('upload/:nome/:anexopath')
+  seeUploadedFile(@Param('anexopath') file, @Param('nome') nome, @Res() res) {
+    return res.download('uploads/' + file, nome);
+    // return res.sendFile(file, { root: 'uploads' });
   }
 }

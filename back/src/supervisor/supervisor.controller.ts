@@ -20,6 +20,10 @@ export class SupervisorController {
   async getSupervisor(@Param('email') email) {
     return this.supervisorService.findSupervisor(email);
   }
+  @Get('id/:id')
+  async getSupervisorById(@Param('id') idSupervisor) {
+    return this.supervisorService.findSupervisorByID(idSupervisor);
+  }
 
   @Post('criar')
   async postSolicitacao(@Body() body: any) {

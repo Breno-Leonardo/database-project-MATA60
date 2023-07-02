@@ -27,7 +27,7 @@ export class AlunoService {
     matricula: number,
   ): Promise<AlunoEntity> {
     const aluno = await this.alunoRepository.query(
-      `Select matricula,cpf, telefone, nome, email,codigo_curso from aluno where matricula =${matricula}`,
+      `Select matricula,cpf, telefone, nome, sobrenome, email,codigo_curso from aluno where matricula =${matricula}`,
     );
     if (!aluno) {
       throw new NotFoundException(`Aluno: ${matricula} not found`);
