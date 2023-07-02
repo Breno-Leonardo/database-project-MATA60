@@ -29,5 +29,23 @@ npm i
 npm run start:dev
 ```
 
+É preciso criar um arquivo .env na pasta back com as seguintes informações:
+
+```
+DB_HOST=localhost
+DB_USERNAME=postgres
+DB_PASSWORD=
+DB_PORT=5432
+DB_DATABASE=siscomp
+DB_SCHEMA=public
+JWT_SECRET=SenhaInquebravel
+JWT_TIME_EXPIRES=7d
+```
+
+O hash senha de todos os usuarios nas migations referência a senha "123".
+
+
+
+
 
 
