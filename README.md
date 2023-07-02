@@ -2,6 +2,9 @@
 
 Sistema para atividades complementares
 
+![Mapeamento Final](https://github.com/Breno-Leonardo/database-project-MATA60/assets/58619307/91ea8234-6dcc-483f-a847-7805a0c07ed7)
+
+
 ## Vídeo Demonstração 
 https://www.youtube.com/watch?v=8AKrx4YPoso
 
