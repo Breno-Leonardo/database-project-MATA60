@@ -3,10 +3,12 @@
 Sistema para atividades complementares
 
 ## Vídeo Demonstração 
+https://www.youtube.com/watch?v=8AKrx4YPoso
 
 
+https://github.com/Breno-Leonardo/database-project-MATA60/assets/58619307/ba2eff0d-30b6-498d-8b2e-7e678f1f787d
 
-https://github.com/Breno-Leonardo/database-project-MATA60/assets/58619307/771befbe-2ed0-4743-ad6b-17c16c667e01
+
 
 
 
