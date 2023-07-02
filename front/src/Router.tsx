@@ -10,6 +10,7 @@ import { NewRequestPage } from "./pages/aluno/NewRequestPage";
 import { AlunoLayout } from "./layouts/AlunoLayout";
 import { CoordenadorLayout } from "./layouts/CoordenadorLayout";
 import { Login } from "./pages/Login";
+import { PageRequestDetails } from "./pages/aluno/PageRequestDetails";
 
 
 export function Router() {
@@ -48,6 +49,10 @@ export function Router() {
           path="resposta"
           element={<ResponsePageManager></ResponsePageManager>}
         ></Route>
+        <Route
+          path="solicitacao-detalhada"
+          element={<PageRequestDetails></PageRequestDetails>}
+        ></Route>
       </Route>
 
       <Route
@@ -67,7 +72,10 @@ export function Router() {
           path="solicitacoes"
           element={<RequestsPageAluno></RequestsPageAluno>}
         ></Route>
-        
+        <Route
+          path="solicitacao-detalhada"
+          element={<PageRequestDetails></PageRequestDetails>}
+        ></Route>
       </Route>
 
     </>

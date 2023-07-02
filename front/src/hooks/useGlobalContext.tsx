@@ -1,10 +1,9 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {UserTokenType} from "../types/UserTokenType";
-import {VacationRequestReturn} from "../types/ReturnVacationRequestType";
 
 interface GlobalData {
   user?: UserTokenType;
-  currentVacationRequest?: VacationRequestReturn;
+  currentRequest?: any;
 }
 interface GlobalContextProps {
   globalData: GlobalData;
@@ -39,16 +38,16 @@ export const useGlobalContext = () => {
     }
   };
 
-  const setCurrentVacationRequestStorageContext = (vacationRequest: VacationRequestReturn | undefined) => {
-    if (vacationRequest != undefined) {
+  const setCurrentRequestStorageContext = (request:any | undefined) => {
+    if (request != undefined) {
       setGlobalData({
         ...globalData,
-        currentVacationRequest: vacationRequest,
+        currentRequest: request,
       });
     } else {
       setGlobalData({
         ...globalData,
-        currentVacationRequest: undefined,
+        currentRequest: undefined,
       });
     }
   };
@@ -56,7 +55,7 @@ export const useGlobalContext = () => {
     globalData,
     user: globalData?.user,
     setUserStorageContext,
-    currentVacationRequest: globalData?.currentVacationRequest,
-    setCurrentVacationRequestStorageContext,
+    currentRequest: globalData?.currentRequest,
+    setCurrentRequestStorageContext,
   };
 };

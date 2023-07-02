@@ -1,5 +1,5 @@
 import { Container } from "../../components/Container";
-import styles from "./css/ResponsePageManager.module.css";
+import styles from "./css/PageRequestDetails.module.css";
 import { EmployeeLine } from "../../components/EmployeeLine";
 import { Button } from "../../components/Button";
 import { TextArea } from "../../components/TextArea";
@@ -24,19 +24,15 @@ import { useRequests } from "../../hooks/useRequests";
 import { VacationRequestReturn } from "../../types/ReturnVacationRequestType";
 import { Input } from "../../components/Input";
 
-export function ResponsePageManager() {
-  const [managerMessage, setManagerMessage] = useState("");
-  const { user } = useGlobalContext();
+export function PageRequestDetails() {
   const { currentRequest, setCurrentRequestStorageContext } =
     useGlobalContext();
-  const [loadingIntersection, setLoadingIntersection] = useState(true);
+
   const [loadingRequest, setLoadingRequest] = useState(true);
   const [refresh, setRefresh] = useState(false);
   const [supervisor, setSupervisor] = useState();
-  const [currentCarga, setCurrentCarga] = useState("");
   const [anexos, setAnexos] = useState([]);
   const { getRequest, putRequest, postRequest } = useRequests();
-  
 
   useEffect(() => {
     if (currentRequest != undefined) {
@@ -82,45 +78,6 @@ export function ResponsePageManager() {
   }, [currentRequest]);
 
   //
-  const handleManagerMessage = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setManagerMessage(event.target.value);
-  };
-  const handleCarga = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentCarga(event.target.value);
-  };
-  //handle update
-
-  const rejectRequest = async () => {
-    const messageEmail = async () =>
-      await postRequest(URL_MESSAGE_EMAIL_RESPONSE, {}).then((response) => {});
-    messageEmail();
-    const request = async () =>
-    await postRequest(URL_CREATE_SOLICITACAO, {
-      ...currentRequest,
-      situacao:"Reprovada",
-      
-      }).then((response) => {
-        window.location.href = window.location.href.replace("resposta", "");
-      });
-    request();
-  };
-
-  const acceptRequest = async () => {
-    const messageEmail = async () =>
-      await postRequest(URL_MESSAGE_EMAIL_RESPONSE, {}).then((response) => {});
-    messageEmail();
-    const acceptRequest = async () =>
-    await postRequest(URL_CREATE_SOLICITACAO, {
-      ...currentRequest,
-      situacao:"Aprovada",
-      carga_aproveitada: currentCarga
-      }).then((response) => {
-        window.location.href = window.location.href.replace("resposta", "");
-      });
-    acceptRequest();
-  };
 
   return (
     <>
@@ -178,8 +135,10 @@ export function ResponsePageManager() {
           ></TextArea>
 
           <TextArea
-            onChange={handleManagerMessage}
-            placeholder="Digite uma mensagem para o aluno, caso necessário"
+            placeholder=""
+            title="Mensagem Do Coordenador"
+            value={currentRequest?.resposta_coordenador}
+            disabled={true}
           ></TextArea>
 
           <div className={styles.infos}>
@@ -195,31 +154,6 @@ export function ResponsePageManager() {
                 </div>
               );
             })}
-          </div>
-
-          <div className={styles.infosCarga}>
-            <span>Carga Aproveitada</span>
-            <Input
-              placeholder="Carga Aproveitada"
-              type="number"
-              sizeInput="Medium"
-              onChange={handleCarga}
-            ></Input>
-          </div>
-
-          <div className={styles.divForButton}>
-            <Button
-              onClick={() => acceptRequest()}
-              content="Aprovar"
-              size="Big"
-            ></Button>
-
-            <Button
-              onClick={() => rejectRequest()}
-              content="Reprovar"
-              size="Big"
-              color="Red"
-            ></Button>
           </div>
         </>
       </Container>

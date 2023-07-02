@@ -1,4 +1,4 @@
-import { AUTHORIZATION_KEY, CURRENT_VACATION_REQUEST } from "../../constants/constants";
+import { AUTHORIZATION_KEY, CURRENT_REQUEST } from "../../constants/constants";
 import {
   getItemStorage,
   removeItemStorage,
@@ -15,11 +15,11 @@ export const setAuthorization = (token: string) => {
 
 export const getAuthorization = () => getItemStorage(AUTHORIZATION_KEY);
 
-export const setCurrentVacationRequestID = (vacationRequestID: number) => {
-  if (vacationRequestID != undefined) {
-    setItemStorage(CURRENT_VACATION_REQUEST, ""+vacationRequestID+"");
+export const setCurrentRequestID = (requestID: number) => {
+  if (requestID != undefined) {
+    setItemStorage(CURRENT_REQUEST, ""+requestID+"");
   }
 };
 
-export const getCurrentVacationRequestID = () => getItemStorage(CURRENT_VACATION_REQUEST);
+export const getCurrentRequestID = () => getItemStorage(CURRENT_REQUEST);
 

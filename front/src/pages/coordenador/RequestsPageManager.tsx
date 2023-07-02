@@ -14,11 +14,11 @@ import {useRequests} from "../../hooks/useRequests";
 import {URL_GET_ALL_COLLABORATORS, URL_GET_ALL_REQUESTS_COORDENADOR, URL_GET_ALL_TEAMS, URL_GET_ALL_VACATION_REQUEST} from "../../constants/constants";
 import {TeamType} from "../../types/TeamType";
 import {VacationRequestReturn} from "../../types/ReturnVacationRequestType";
-import {setCurrentVacationRequestID} from "../../functions/connections/auth";
+import {setCurrentRequestID} from "../../functions/connections/auth";
 import {ContainerContent} from "../../components/ContainerContent";
 
 export function RequestsPageManager() {
-  const {user, setCurrentVacationRequestStorageContext} = useGlobalContext();
+  const {user, setCurrentRequestStorageContext} = useGlobalContext();
   const {getRequest} = useRequests();
   const [requests, setRequests] = useState<[]>();
   const [loading, setLoading] = useState(true);
@@ -40,7 +40,7 @@ export function RequestsPageManager() {
   return user != undefined ? (
     <Container loading={loading} title="Solicitações">
       <div className={styles.divForButton}>
-        <Topics fields={["Aluno", "Matrícula", "Atividade"]} position="center"></Topics>
+        <Topics fields={["Aluno","Data", "Matrícula", "Atividade"]} position="center"></Topics>
         
       </div>
 
@@ -51,14 +51,14 @@ export function RequestsPageManager() {
               <div className={styles.divLink}>
                <div className={styles.divInfos}>
                <Link to="/coordenador/resposta">
-                  <EmployeeLine position="center" fields={[soli.nome, soli.matricula, soli.nome_atividade]} colorsFields={["black", "black", "black"]}></EmployeeLine>
+                  <EmployeeLine position="center" fields={[ soli.nome,formatDate(soli.data_da_solicitacao), soli.matricula, soli.nome_atividade]} colorsFields={["black", "black", "black"]}></EmployeeLine>
                 </Link>
                </div>
                 <Link to="/coordenador/resposta">
                   <Button
                     onClick={() => {
-                      setCurrentVacationRequestStorageContext(soli);
-                      setCurrentVacationRequestID(soli.id);
+                      setCurrentRequestStorageContext(soli);
+                      setCurrentRequestID(soli.id);
                     }}
                     content="Responder"
                     size="Small"

@@ -23,9 +23,10 @@ import {
   URL_GET_HORAS_EXTENSAO_FALTANTES,
   URL_GET_HORAS_GERAIS_FALTANTES,
 } from "../../constants/constants";
+import { setCurrentRequestID } from "../../functions/connections/auth";
 
 export function RequestsPageAluno() {
-  const { user } = useGlobalContext();
+  const { user, setCurrentRequestStorageContext } = useGlobalContext();
   const { getRequest } = useRequests();
   const [requests, setRequests] = useState<[]>();
   const [loading, setLoading] = useState(true);
@@ -61,12 +62,17 @@ export function RequestsPageAluno() {
               .then((result: any) => {
                 getRequest(URL_GET_CURSO + "/" + result.codigo_curso)
                   .then((result2: any) => {
-                    setHorasGeraisFaltantes(Math.max(0, result2.horas_gerais).toString());
+                    setHorasGeraisFaltantes(
+                      Math.max(0, result2.horas_gerais).toString()
+                    );
                   })
                   .catch(() => {});
               })
               .catch(() => {});
-          } else setHorasGeraisFaltantes(Math.max(0, result[0].horas_faltantes).toString());
+          } else
+            setHorasGeraisFaltantes(
+              Math.max(0, result[0].horas_faltantes).toString()
+            );
         })
         .catch(() => {});
 
@@ -78,12 +84,17 @@ export function RequestsPageAluno() {
               .then((result: any) => {
                 getRequest(URL_GET_CURSO + "/" + result.codigo_curso)
                   .then((result2: any) => {
-                    setHorasExtensaoFaltantes(Math.max(0, result2.horas_extensao).toString());
+                    setHorasExtensaoFaltantes(
+                      Math.max(0, result2.horas_extensao).toString()
+                    );
                   })
                   .catch(() => {});
               })
               .catch(() => {});
-          } else setHorasExtensaoFaltantes( Math.max(0, result[0].horas_faltantes).toString());
+          } else
+            setHorasExtensaoFaltantes(
+              Math.max(0, result[0].horas_faltantes).toString()
+            );
         })
         .catch(() => {});
 
@@ -133,7 +144,7 @@ export function RequestsPageAluno() {
       <Container loading={loading} title="Solicitações">
         {requests != undefined && requests.length > 0 ? (
           <Topics
-            fields={["Data","Atividade", "Carga", "Status"]}
+            fields={["Data", "Atividade", "Carga", "Status"]}
             position="center"
           ></Topics>
         ) : (
@@ -143,24 +154,39 @@ export function RequestsPageAluno() {
         {requests != undefined ? (
           requests.map((soli: any) => {
             return (
-              <EmployeeLine
-                fields={[
-                  formatDate(soli.data_da_solicitacao),
-                  soli.nome_atividade,
-                  formatTipoCarga(soli.tipo_carga_horaria),
-                  soli.situacao,
-                ]}
-                colorsFields={["black", "black", "blue"]}
-                position="center"
-                hasIcon={false}
-                key={soli.id + Math.floor(Math.random() * 101).toString()}
-              ></EmployeeLine>
+              <div className={styles.divForButton} key={soli.id + "requests"}>
+                <div className={styles.divLink}>
+                  <div className={styles.divInfos}>
+                    <Link to="/coordenador/resposta">
+                      <EmployeeLine
+                        position="center"
+                        fields={[
+                          formatDate(soli.data_da_solicitacao),
+                          soli.nome_atividade,
+                          formatTipoCarga(soli.tipo_carga_horaria),
+                          soli.situacao,
+                        ]}
+                        colorsFields={["black", "black", "black"]}
+                      ></EmployeeLine>
+                    </Link>
+                  </div>
+                  <Link to="/aluno/solicitacao-detalhada">
+                    <Button
+                      onClick={() => {
+                        setCurrentRequestStorageContext(soli);
+                        setCurrentRequestID(soli.id);
+                      }}
+                      content="Ver"
+                      size="Small"
+                    ></Button>
+                  </Link>
+                </div>
+              </div>
             );
           })
         ) : (
           <></>
         )}
-
         <Link to="/aluno/nova-solicitacao">
           <Button content="Nova Solicitação" size="ExtraBig"></Button>
         </Link>

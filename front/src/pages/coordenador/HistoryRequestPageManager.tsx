@@ -15,7 +15,7 @@ import {getAuthorization} from "../../functions/connections/auth";
 import {Input} from "../../components/Input";
 import {Button} from "../../components/Button";
 import {Link} from "react-router-dom";
-import {setCurrentVacationRequestID} from "../../functions/connections/auth";
+import {setCurrentRequestID} from "../../functions/connections/auth";
 export function HistoryRequestsPageManager() {
   const {getRequest} = useRequests();
   const [requests, setRequests] = useState<any>([]);
@@ -24,10 +24,10 @@ export function HistoryRequestsPageManager() {
   const [team, setTeam] = useState(-1);
   const [teamCollaborators, setTeamCollaborators] = useState<string[][]>([]);
   const [teamCollaboratorSelected, setTeamCollaboratorSelected] = useState<string>();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [content, setContent] = useState();
   const [registrationInput, setRegistrationInput] = useState("");
-  const {user, setCurrentVacationRequestStorageContext} = useGlobalContext();
+  const {user, setCurrentRequestStorageContext} = useGlobalContext();
 
   //set requests
   useEffect(() => {
@@ -38,14 +38,14 @@ export function HistoryRequestsPageManager() {
               <div className={styles.divLink}>
                <div className={styles.divInfos}>
                <Link to="/coordenador/resposta">
-                  <EmployeeLine position="center" fields={[soli.nome, soli.matricula, soli.nome_atividade, soli.situacao]} colorsFields={["black", "black", "black"]}></EmployeeLine>
+                  <EmployeeLine position="center" fields={[soli.nome,formatDate(soli.data_da_solicitacao), soli.matricula, soli.nome_atividade, soli.situacao]} colorsFields={["black", "black", "black"]}></EmployeeLine>
                 </Link>
                </div>
-                <Link to="/coordenador/resposta">
+                <Link to="/coordenador/solicitacao-detalhada">
                   <Button
                     onClick={() => {
-                      setCurrentVacationRequestStorageContext(soli);
-                      setCurrentVacationRequestID(soli.id);
+                      setCurrentRequestStorageContext(soli);
+                      setCurrentRequestID(soli.id);
                     }}
                     content="Ver"
                     size="Small"
@@ -72,6 +72,7 @@ export function HistoryRequestsPageManager() {
 
   const searchCollaborator = () => {
     if (registrationInput != "") {
+      setLoading(true);
       getCollaborator();
     }
   };
@@ -87,7 +88,7 @@ export function HistoryRequestsPageManager() {
         <Button onClick={searchCollaborator} content="Pesquisar" size="Big"></Button>
       </Container>
       <Container title="Histórico de solicitações" loading={false}>
-        {requests != undefined && requests.length > 0 ? <Topics fields={["Nome",  "Matrícula", "Atividade", "Status"]} position="center"></Topics> : <div className="noInformation">Sem Solicitações</div>}
+        {requests != undefined && requests.length > 0 ? <Topics fields={["Nome",  "Data","Matrícula", "Atividade", "Status"]} position="center"></Topics> : <div className="noInformation">Sem Solicitações</div>}
 
         <ContainerContent loading={loading}>{content}</ContainerContent>
       </Container>

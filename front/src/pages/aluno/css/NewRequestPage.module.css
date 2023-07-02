@@ -4,6 +4,12 @@
   font-size: 1.3rem;
   justify-content:space-between;
   align-items: center;
+  margin-bottom: 1.5rem;
+  
+}
+.fileInput {
+  
+  margin-top: 2.5rem;
   
 }
 .infosContent{
