@@ -5,25 +5,22 @@ import { Button } from "../../components/Button";
 import { TextArea } from "../../components/TextArea";
 import { Select } from "../../components/Select";
 import { Input } from "../../components/Input";
-import calendar from "../../assets/calendar-month-outline-black.svg";
 import { useEffect, useRef, useState } from "react";
 import {
   URL_CREATE_SOLICITACAO,
-  URL_CREATE_VACATION_REQUEST,
   URL_GET_ALL_HORAS_FALTANTES_TIPOS_ATIVIDADES,
   URL_GET_ALUNO,
   URL_GET_ATIVIDADES_BY_CURSO,
   URL_GET_CURSO,
-  URL_GET_TEAM_BY_ID,
-  URL_MESSAGE_EMAIL,
-  URL_MESSAGE_WORKPLACE,
   URL_SUPERVISOR,
   URL_UPLOAD,
 } from "../../constants/constants";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { useRequests } from "../../hooks/useRequests";
 import { formatDate, formatDateForUTC } from "../../functions/auxFunctions";
-import { VacationRequestBody } from "../../types/VacationRequestType";
+import { AlunoType } from "../../types/AlunoType";
+import { AtividadeType } from "../../types/AtividadeType";
+import { CursoType } from "../../types/CursoType";
 
 export function NewRequestPage() {
   const [options, setOptions] = useState<[]>();
@@ -31,17 +28,17 @@ export function NewRequestPage() {
   const [alunoMessage, setAlunoMessage] = useState("");
   const { postRequest, getRequest } = useRequests();
   const [loading, setLoading] = useState(true);
-  const [aluno, setAluno] = useState();
-  const [curso, setCurso] = useState();
-  const [atividades, setAtividades] = useState<[]>();
+  const [aluno, setAluno] = useState<AlunoType>();
+  const [curso, setCurso] = useState<CursoType>();
+  const [atividades, setAtividades] = useState<AtividadeType[]>();
   const [arrayHorasRestantes, setArrayHorasRestantes] = useState<[]>();
   const [tipo, setTipo] = useState("");
   const [horasRestantes, setHorasRestantes] = useState("");
   const [limiteHoras, setLimiteHoras] = useState("");
-  const [file1, setFile1] = useState();
-  const [file2, setFile2] = useState();
-  const [file3, setFile3] = useState();
-  const [currentAtiv, setCurrentAtiv] = useState();
+  const [file1, setFile1] = useState<any>();
+  const [file2, setFile2] = useState<any>();
+  const [file3, setFile3] = useState<any>();
+  const [currentAtiv, setCurrentAtiv] = useState<AtividadeType>();
   const [currentCarga, setCurrentCarga] = useState("");
   //supervisor
   const [currentName, setCurrentName] = useState("");
@@ -119,27 +116,27 @@ export function NewRequestPage() {
   }, [aluno]);
 
   useEffect(() => {
-    let aux = [];
+    let aux:any = [];
     let cont = 0;
     atividades?.map((ativ) => {
       aux = [...aux, [cont, ativ.nome]];
       cont++;
     });
     if (atividades) {
-      if (atividades[0].tipo_carga_horaria == "G") {
+      if (atividades[0]?.tipo_carga_horaria == "G") {
         setTipo("Geral");
       } else {
         setTipo("Extensão");
       }
-      setLimiteHoras(atividades[0].limite_horas);
+      setLimiteHoras(atividades[0]?.limite_horas.toString());
     }
 
     setOptions(aux);
   }, [atividades]);
 
   useEffect(() => {
-    arrayHorasRestantes?.forEach((element) => {
-      if (element.id == atividades[0].id) {
+    arrayHorasRestantes?.forEach((element:any) => {
+      if (atividades && element.id == atividades[0].id) {
         setHorasRestantes(Math.max(element.restantes, 0).toString());
         setCurrentAtiv(atividades[0]);
       }
@@ -149,16 +146,21 @@ export function NewRequestPage() {
   }, [arrayHorasRestantes]);
 
   const handleAtividade = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    if (atividades[event.target.value].tipo_carga_horaria == "G") {
+    let num:number=parseInt(event.target.value);
+    if (
+      atividades &&
+      atividades[num].tipo_carga_horaria == "G"
+    ) {
       setTipo("Geral");
     } else {
       setTipo("Extensão");
     }
-    setLimiteHoras(atividades[event.target.value].limite_horas);
-    arrayHorasRestantes?.forEach((element) => {
-      if (element.id == atividades[event.target.value].id) {
+    if(atividades)
+    setLimiteHoras(atividades[num].limite_horas.toString());
+    arrayHorasRestantes?.forEach((element:any) => {
+      if (atividades && element.id == atividades[num].id) {
         setHorasRestantes(Math.max(element.restantes, 0).toString());
-        setCurrentAtiv(atividades[event.target.value]);
+        setCurrentAtiv(atividades[num]);
       }
     });
   };
@@ -172,7 +174,7 @@ export function NewRequestPage() {
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     let solicitacaoID = "-1";
-    let supervisorID = null;
+    let supervisorID:number = -1;
 
     const createSolicitacao = async () =>
       await postRequest(URL_CREATE_SOLICITACAO, {
@@ -181,7 +183,7 @@ export function NewRequestPage() {
         matricula_aluno: user?.matricula,
         carga_real: currentCarga,
         matricula_coordenador: curso?.matricula_coordenador,
-        id_tipo: currentAtiv.id,
+        id_tipo: currentAtiv?.id,
         id_supervisor: supervisorID,
       })
         .then(async (result: any) => {
@@ -284,13 +286,12 @@ export function NewRequestPage() {
           createSupervisor();
         });
 
-    if (currentAtiv.requer_supervisor) {
+    if (currentAtiv?.requer_supervisor) {
       checkSupervisor();
     } else {
       createSolicitacao();
     }
   };
-  const stringDateNow = formatDateForUTC(new Date(Date.now()));
 
   return (
     <Container loading={loading} title="Solicitação">

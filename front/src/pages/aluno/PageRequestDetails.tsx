@@ -9,20 +9,18 @@ import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { useEffect, useState } from "react";
 import { getCurrentRequestID } from "../../functions/connections/auth";
 import {
-  URL_ACCEPT_VACATION_REQUEST,
+  
   URL_ANEXOS,
-  URL_CREATE_SOLICITACAO,
-  URL_GET_ALL_REQUESTS_ALUNO,
-  URL_GET_ALL_VACATION_REQUEST,
-  URL_GET_ALUNO,
+  
   URL_GET_REQUEST_BY_ID,
-  URL_MESSAGE_EMAIL_RESPONSE,
+  
   URL_SUPERVISOR,
-  URL_UPDATE_VACATION_REQUEST,
+ 
 } from "../../constants/constants";
 import { useRequests } from "../../hooks/useRequests";
-import { VacationRequestReturn } from "../../types/ReturnVacationRequestType";
-import { Input } from "../../components/Input";
+import { AnexoType } from "../../types/AnexoType";
+import { SupervisorType } from "../../types/SupervisorType";
+
 
 export function PageRequestDetails() {
   const { currentRequest, setCurrentRequestStorageContext } =
@@ -30,8 +28,8 @@ export function PageRequestDetails() {
 
   const [loadingRequest, setLoadingRequest] = useState(true);
   const [refresh, setRefresh] = useState(false);
-  const [supervisor, setSupervisor] = useState();
-  const [anexos, setAnexos] = useState([]);
+  const [supervisor, setSupervisor] = useState<SupervisorType>();
+  const [anexos, setAnexos] = useState<AnexoType[]>([]);
   const { getRequest, putRequest, postRequest } = useRequests();
 
   useEffect(() => {

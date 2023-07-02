@@ -37,7 +37,7 @@ export function formatName(name: string): string {
   return name;
 }
 
-export function formatDate(date: string | undefined): string {
+export function formatDate(date: string | undefined| Date): string {
   if (date == undefined) return "undefined";
   const dateConvert = new Date(date);
   const width = window.innerWidth;
@@ -75,30 +75,3 @@ export function formatDateForUTC(date: Date): string {
   return year + "-" + month + "-" + day;
 }
 
-export function isAttentionFlag(limitConcessive: string): boolean {
-  const limitConcessiveDate = new Date(limitConcessive);
-  const dateNow = new Date(Date.now());
-  var diffMonth =
-    (limitConcessiveDate.getUTCFullYear() - dateNow.getUTCFullYear()) * 12 +
-    (limitConcessiveDate.getUTCMonth() - dateNow.getUTCMonth());
-  if (
-    (diffMonth == 1 &&
-      dateNow.getUTCDate() < limitConcessiveDate.getUTCDate()) ||
-    diffMonth > 1
-  ) {
-    return false;
-  }
-  return true;
-}
-
-export function isMoreThanYear(admissionDate: string): boolean {
-  const admission = new Date(admissionDate);
-  const dateNow = new Date(Date.now());
-  var diff =
-    (dateNow.getUTCFullYear() - admission.getUTCFullYear()) * 12 +
-    (dateNow.getUTCMonth() - admission.getUTCMonth());
-  if (diff > 12||(diff == 12 && dateNow.getUTCDate() >= admission.getUTCDate())) {
-    return true;
-  }
-  return false;
-}

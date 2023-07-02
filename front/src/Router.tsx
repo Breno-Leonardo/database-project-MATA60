@@ -1,8 +1,8 @@
 import { Routes, Route, useRouteError } from "react-router-dom";
-import { RequestsPageManager } from "./pages/coordenador/RequestsPageManager";
+import { RequestsPageManager } from "./pages/coordenador/RequestsPageCoordenador";
 import { ErrorPage } from "./pages/ErrorPage";
-import { HistoryRequestsPageManager } from "./pages/coordenador/HistoryRequestPageManager";
-import { ResponsePageManager } from "./pages/coordenador/ResponsePageManager";
+import { HistoryRequestsPageCoordenador } from "./pages/coordenador/HistoryRequestPageCoordenador";
+import { ResponsePageCoordenador } from "./pages/coordenador/ResponsePageCoordenador";
 import { RequestsPageAluno} from "./pages/aluno/RequestsPageAluno";
 
 import { NewRequestPage } from "./pages/aluno/NewRequestPage";
@@ -43,11 +43,11 @@ export function Router() {
         ></Route>
         <Route
           path="historico"
-          element={<HistoryRequestsPageManager></HistoryRequestsPageManager>}
+          element={<HistoryRequestsPageCoordenador></HistoryRequestsPageCoordenador>}
         ></Route>
         <Route
           path="resposta"
-          element={<ResponsePageManager></ResponsePageManager>}
+          element={<ResponsePageCoordenador></ResponsePageCoordenador>}
         ></Route>
         <Route
           path="solicitacao-detalhada"

@@ -7,10 +7,8 @@ import { Link } from "react-router-dom";
 import { Topics } from "../../components/Topics";
 import {
   formatDate,
-  formatDateForUTC,
-  formatDateRequestTopic,
   formatTipoCarga,
-  isAttentionFlag,
+  
 } from "../../functions/auxFunctions";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { useRequests } from "../../hooks/useRequests";

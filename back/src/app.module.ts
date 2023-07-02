@@ -81,7 +81,7 @@ import { initialDataChanges1678662502089 } from './migration/initial_data_change
           initialDataSolicitacao1678662502084,
           initialDataSolicitacao1678662502085,
           initialDataSolicitacao1678662502086,
-          //initialDataAnexo1678662502088,
+          initialDataAnexo1678662502088,
           initialDataChanges1678662502089,
         ],
         migrationsRun: true,

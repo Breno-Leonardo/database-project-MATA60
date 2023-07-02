@@ -1,9 +1,10 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {UserTokenType} from "../types/UserTokenType";
+import { RequestBody } from "../types/RequestType";
 
 interface GlobalData {
   user?: UserTokenType;
-  currentRequest?: any;
+  currentRequest?: RequestBody;
 }
 interface GlobalContextProps {
   globalData: GlobalData;
