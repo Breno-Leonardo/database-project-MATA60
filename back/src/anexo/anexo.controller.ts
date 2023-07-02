@@ -19,12 +19,12 @@ import { FileInterceptor } from '@nestjs/platform-express';
 @Controller('anexo')
 export class AnexoController {
   constructor(private readonly anexoService: AnexoService) {}
-
+  @Roles([UserType.Aluno, UserType.Coordenador])
   @Get(':id')
   async getAnexosBySolicitacaoByID(@Param('id') id) {
     return this.anexoService.findAnexosBySolicitacaoByID(id);
   }
-
+  @Roles([UserType.Aluno, UserType.Coordenador])
   @Post('upload/:solicitacao_id/:num_anexo')
   @UseInterceptors(
     FileInterceptor('anexo', {
@@ -46,7 +46,7 @@ export class AnexoController {
     );
     //console.log(file);
   }
-
+  @Roles([UserType.Aluno, UserType.Coordenador])
   @Get('upload/:nome/:anexopath')
   seeUploadedFile(@Param('anexopath') file, @Param('nome') nome, @Res() res) {
     return res.download('uploads/' + file, nome);

@@ -22,6 +22,7 @@ export class AlunoController {
     return this.alunoService.findAlunoByMatriculaWithoutHash(matricula);
   }
 
+  @Roles([UserType.Aluno, UserType.Coordenador])
   @Get('lista-alunos')
   async getAllAlunos() {
     return this.alunoService.getAllAlunos();
