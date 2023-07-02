@@ -12,4 +12,6 @@ export interface RequestBody {
   sobrenome: string;
   id: number;
   requer_supervisor:boolean;
+  horas: number;
+  limite_horas: number;
 }

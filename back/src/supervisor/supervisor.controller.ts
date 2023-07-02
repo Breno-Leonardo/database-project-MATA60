@@ -16,9 +16,19 @@ import { UserType } from 'src/user-type';
 export class SupervisorController {
   constructor(private readonly supervisorService: SupervisorService) {}
 
-  @Get(':email')
-  async getSupervisor(@Param('email') email) {
-    return this.supervisorService.findSupervisor(email);
+  @Get(':email/:nome/:sobrenome/:telefone')
+  async getSupervisor(
+    @Param('email') email,
+    @Param('nome') nome,
+    @Param('sobrenome') sobrenome,
+    @Param('telefone') telefone,
+  ) {
+    return this.supervisorService.findSupervisor(
+      email,
+      nome,
+      sobrenome,
+      telefone,
+    );
   }
   @Get('id/:id')
   async getSupervisorById(@Param('id') idSupervisor) {

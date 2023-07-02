@@ -116,10 +116,10 @@ export function NewRequestPage() {
   }, [aluno]);
 
   useEffect(() => {
-    let aux:any = [];
+    let aux: any = [];
     let cont = 0;
     atividades?.map((ativ) => {
-      aux = [...aux, [cont, ativ.nome]];
+      aux = [...aux, [cont, (ativ.tipo_carga_horaria=="G" ? "Geral - ": "Extensão - ") +  ativ.nome + " " + "(" + ativ.id + ") " + ativ.horas+"H"  ]];
       cont++;
     });
     if (atividades) {
@@ -135,9 +135,9 @@ export function NewRequestPage() {
   }, [atividades]);
 
   useEffect(() => {
-    arrayHorasRestantes?.forEach((element:any) => {
+    arrayHorasRestantes?.forEach((element: any) => {
       if (atividades && element.id == atividades[0].id) {
-        setHorasRestantes(Math.max(element.restantes, 0).toString());
+        setHorasRestantes(Math.max(parseInt(element.restantes), 0).toString());
         setCurrentAtiv(atividades[0]);
       }
     });
@@ -146,20 +146,17 @@ export function NewRequestPage() {
   }, [arrayHorasRestantes]);
 
   const handleAtividade = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    let num:number=parseInt(event.target.value);
-    if (
-      atividades &&
-      atividades[num].tipo_carga_horaria == "G"
-    ) {
+    let num: number = parseInt(event.target.value);
+    if (atividades && atividades[num].tipo_carga_horaria == "G") {
       setTipo("Geral");
     } else {
       setTipo("Extensão");
     }
-    if(atividades)
-    setLimiteHoras(atividades[num].limite_horas.toString());
-    arrayHorasRestantes?.forEach((element:any) => {
+    if (atividades) setLimiteHoras(atividades[num].limite_horas.toString());
+
+    arrayHorasRestantes?.forEach((element: any) => {
       if (atividades && element.id == atividades[num].id) {
-        setHorasRestantes(Math.max(element.restantes, 0).toString());
+        setHorasRestantes(Math.max(parseInt(element.restantes), 0).toString());
         setCurrentAtiv(atividades[num]);
       }
     });
@@ -174,7 +171,7 @@ export function NewRequestPage() {
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     let solicitacaoID = "-1";
-    let supervisorID:number = -1;
+    let supervisorID: number = -1;
 
     const createSolicitacao = async () =>
       await postRequest(URL_CREATE_SOLICITACAO, {
@@ -273,7 +270,7 @@ export function NewRequestPage() {
         });
 
     const checkSupervisor = async () =>
-      await getRequest(URL_SUPERVISOR + currentEmail)
+      await getRequest(URL_SUPERVISOR + currentEmail+ currentName +currentLastName + currentPhone)
         .then(async (result: any) => {
           if (result.id) {
             supervisorID = result.id;
@@ -294,13 +291,13 @@ export function NewRequestPage() {
   };
 
   return (
-    <Container loading={loading} title="Solicitação">
+    <Container loading={loading} title="Criar Solicitação">
       <div className={styles.infos}>
         <div className={styles.infosContent}>
           <span>Atividade</span>
           <Select
-            sizeSelect="Medium"
-            width="Medium"
+            sizeSelect="Big"
+            width="Big"
             optionsDouble={options}
             onChange={handleAtividade}
           ></Select>

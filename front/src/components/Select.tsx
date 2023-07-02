@@ -6,7 +6,6 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   width?: "Big" | "Medium" | "Small";
   optionDisabled?: string;
 }
-// cada option do array de options é constituido por duas opções, cpf e nome
 export function Select({
   optionsDouble = [],
   optionsUnique = [],

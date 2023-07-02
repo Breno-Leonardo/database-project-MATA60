@@ -12,6 +12,18 @@
   padding-left: 1rem;
   font-size: 1.3rem;
 }
+.Big{
+  height: 2.5rem;
+  width: 25rem;
+  padding-left: 1rem;
+  font-size: 1.3rem;
+}
+.withBig{
+  height: 2.5rem;
+  width: 300rem;
+  padding-left: 1rem;
+  font-size: 1.3rem;
+}
 
 .widthMedium {
   width: 15rem;

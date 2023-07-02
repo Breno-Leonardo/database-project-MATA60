@@ -17,7 +17,7 @@ export class SolicitacaoAproveitamentoService {
     matricula_siape: number,
   ): Promise<SolicitacaoAproveitamentoEntity> {
     const solicitacoes = await this.solicitacaoAproveitamentoRepository.query(
-      `SELECT S.id, S.situacao, S.data_da_solicitacao, S.descricao, S.carga_real, S.carga_aproveitada, S.resposta_coordenador,S.id_supervisor, T.nome AS "nome_atividade", T.tipo_carga_horaria,T.requer_supervisor, A.matricula, A.nome, A.sobrenome FROM solicitacao_aproveitamento AS S INNER JOIN tipo_atividade AS T ON S.id_tipo=T.id INNER JOIN aluno AS A ON S.matricula_aluno=A.matricula INNER JOIN curso AS C ON C.codigo=T.codigo_curso WHERE
+      `SELECT S.id, S.situacao, S.data_da_solicitacao, S.descricao, S.carga_real, S.carga_aproveitada, S.resposta_coordenador,S.id_supervisor, T.nome AS "nome_atividade", T.tipo_carga_horaria,T.requer_supervisor,T.horas, T.limite_horas, A.matricula, A.nome, A.sobrenome FROM solicitacao_aproveitamento AS S INNER JOIN tipo_atividade AS T ON S.id_tipo=T.id INNER JOIN aluno AS A ON S.matricula_aluno=A.matricula INNER JOIN curso AS C ON C.codigo=T.codigo_curso WHERE
       C.matricula_coordenador=${matricula_siape};
       `,
     );
@@ -35,7 +35,7 @@ export class SolicitacaoAproveitamentoService {
     situacao: string,
   ): Promise<SolicitacaoAproveitamentoEntity> {
     const solicitacoes = await this.solicitacaoAproveitamentoRepository.query(
-      `SELECT S.id, S.situacao, S.data_da_solicitacao, S.descricao, S.carga_real, S.carga_aproveitada, S.resposta_coordenador,S.id_supervisor, T.nome AS "nome_atividade", T.tipo_carga_horaria,T.requer_supervisor, A.matricula, A.nome, A.sobrenome FROM solicitacao_aproveitamento AS S INNER JOIN tipo_atividade AS T ON S.id_tipo=T.id INNER JOIN aluno AS A ON S.matricula_aluno=A.matricula INNER JOIN curso AS C ON C.codigo=T.codigo_curso WHERE
+      `SELECT S.id, S.situacao, S.data_da_solicitacao, S.descricao, S.carga_real, S.carga_aproveitada, S.resposta_coordenador,S.id_supervisor, T.nome AS "nome_atividade", T.tipo_carga_horaria,T.requer_supervisor,T.horas, T.limite_horas, A.matricula, A.nome, A.sobrenome FROM solicitacao_aproveitamento AS S INNER JOIN tipo_atividade AS T ON S.id_tipo=T.id INNER JOIN aluno AS A ON S.matricula_aluno=A.matricula INNER JOIN curso AS C ON C.codigo=T.codigo_curso WHERE
       C.matricula_coordenador=${matricula_siape} AND S.situacao='${situacao}';
       `,
     );
@@ -52,7 +52,7 @@ export class SolicitacaoAproveitamentoService {
     matricula: number,
   ): Promise<SolicitacaoAproveitamentoEntity> {
     const solicitacoes = await this.solicitacaoAproveitamentoRepository.query(
-      `SELECT S.id, S.situacao, S.data_da_solicitacao, S.descricao, S.carga_real, S.carga_aproveitada, S.resposta_coordenador,S.id_supervisor, T.nome AS "nome_atividade", T.tipo_carga_horaria,T.requer_supervisor, A.matricula, A.nome, A.sobrenome FROM solicitacao_aproveitamento AS S INNER JOIN tipo_atividade AS T ON S.id_tipo=T.id INNER JOIN aluno AS A ON S.matricula_aluno=A.matricula INNER JOIN curso AS C ON C.codigo=T.codigo_curso WHERE 
+      `SELECT S.id, S.situacao, S.data_da_solicitacao, S.descricao, S.carga_real, S.carga_aproveitada, S.resposta_coordenador,S.id_supervisor, T.nome AS "nome_atividade", T.tipo_carga_horaria,T.requer_supervisor,T.horas, T.limite_horas, A.matricula, A.nome, A.sobrenome FROM solicitacao_aproveitamento AS S INNER JOIN tipo_atividade AS T ON S.id_tipo=T.id INNER JOIN aluno AS A ON S.matricula_aluno=A.matricula INNER JOIN curso AS C ON C.codigo=T.codigo_curso WHERE 
       matricula_aluno=${matricula};
       `,
     );
@@ -68,7 +68,7 @@ export class SolicitacaoAproveitamentoService {
     situacao: string,
   ): Promise<SolicitacaoAproveitamentoEntity> {
     const solicitacoes = await this.solicitacaoAproveitamentoRepository.query(
-      `SELECT S.id, S.situacao, S.data_da_solicitacao, S.descricao, S.carga_real, S.carga_aproveitada, S.resposta_coordenador,S.id_supervisor, T.nome AS "nome_atividade", T.tipo_carga_horaria,T.requer_supervisor, A.matricula, A.nome, A.sobrenome FROM solicitacao_aproveitamento AS S INNER JOIN tipo_atividade AS T ON S.id_tipo=T.id INNER JOIN aluno AS A ON S.matricula_aluno=A.matricula INNER JOIN curso AS C ON C.codigo=T.codigo_curso WHERE
+      `SELECT S.id, S.situacao, S.data_da_solicitacao, S.descricao, S.carga_real, S.carga_aproveitada, S.resposta_coordenador,S.id_supervisor, T.nome AS "nome_atividade", T.tipo_carga_horaria,T.requer_supervisor,T.horas, T.limite_horas, A.matricula, A.nome, A.sobrenome FROM solicitacao_aproveitamento AS S INNER JOIN tipo_atividade AS T ON S.id_tipo=T.id INNER JOIN aluno AS A ON S.matricula_aluno=A.matricula INNER JOIN curso AS C ON C.codigo=T.codigo_curso WHERE
       matricula_aluno=${matricula} AND situacao='${situacao}';
       `,
     );
@@ -168,38 +168,38 @@ export class SolicitacaoAproveitamentoService {
   async calculateHoursType(
     matricula: number,
   ): Promise<SolicitacaoAproveitamentoEntity> {
-    const result = await this.solicitacaoAproveitamentoRepository.query(`SELECT
-  T.id,
-  T.nome,
-  t.limite_horas - SUM(carga_aproveitada) AS restantes
-FROM
-  solicitacao_aproveitamento AS S
-  INNER JOIN tipo_atividade AS T ON S.id_tipo = T.id
-WHERE
-  (S.matricula_aluno = ${matricula}
-  AND S.situacao = 'Aprovada')
-GROUP BY
-  T.id
-
-
-UNION
-
-
-SELECT id, nome, 0 FROM tipo_atividade WHERE codigo_curso IN (SELECT
-      codigo_curso
+    const result = await this.solicitacaoAproveitamentoRepository.query(`Select
+    T.id,
+      T.nome,
+      t.limite_horas - SUM(carga_aproveitada) AS restantes
     FROM
-      aluno
+      solicitacao_aproveitamento AS S
+      INNER JOIN tipo_atividade AS T ON S.id_tipo = T.id
     WHERE
-      matricula = ${matricula})
-      AND id NOT IN (SELECT
-  T.id
-FROM
-  solicitacao_aproveitamento AS S
-  INNER JOIN tipo_atividade AS T ON S.id_tipo = T.id
-WHERE
-  (S.matricula_aluno = ${matricula}
-  AND S.situacao = 'Aprovada'))
-ORDER BY id;
+      (S.matricula_aluno = 221855055
+      AND S.situacao = 'Aprovada')
+    GROUP BY
+      T.id
+    
+    
+    UNION
+    
+    
+    SELECT id, nome, limite_horas FROM tipo_atividade WHERE codigo_curso IN (SELECT
+          codigo_curso
+        FROM
+          aluno
+        WHERE
+          matricula = 221855055)
+          AND id NOT IN (SELECT
+      T.id
+    FROM
+      solicitacao_aproveitamento AS S
+      INNER JOIN tipo_atividade AS T ON S.id_tipo = T.id
+    WHERE
+      (S.matricula_aluno = 221855055
+      AND S.situacao = 'Aprovada'))
+    ORDER BY id;
     `);
     if (!result) {
       throw new NotFoundException(`Aluno: ${matricula} not found`);

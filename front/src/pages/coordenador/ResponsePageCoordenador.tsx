@@ -145,6 +145,14 @@ export function ResponsePageCoordenador() {
               Carga Real: {currentRequest?.carga_real}
             </span>
           </div>
+          <div className={styles.infos}>
+            <span className={styles.infoPrimary}>
+              Horas Atividade:{currentRequest?.horas}
+            </span>
+            <span className={styles.infoSecondary}>
+              Limite Horas: {currentRequest?.limite_horas}
+            </span>
+          </div>
           {currentRequest?.requer_supervisor ? (
             <>
               <div className={styles.infos}>

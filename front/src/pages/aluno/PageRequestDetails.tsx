@@ -9,18 +9,13 @@ import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { useEffect, useState } from "react";
 import { getCurrentRequestID } from "../../functions/connections/auth";
 import {
-  
   URL_ANEXOS,
-  
   URL_GET_REQUEST_BY_ID,
-  
   URL_SUPERVISOR,
- 
 } from "../../constants/constants";
 import { useRequests } from "../../hooks/useRequests";
 import { AnexoType } from "../../types/AnexoType";
 import { SupervisorType } from "../../types/SupervisorType";
-
 
 export function PageRequestDetails() {
   const { currentRequest, setCurrentRequestStorageContext } =
@@ -108,6 +103,14 @@ export function PageRequestDetails() {
             </span>
             <span className={styles.infoSecondary}>
               Carga Real: {currentRequest?.carga_real}
+            </span>
+          </div>
+          <div className={styles.infos}>
+            <span className={styles.infoPrimary}>
+              Horas Atividade:{currentRequest?.horas}
+            </span>
+            <span className={styles.infoSecondary}>
+              Limite Horas: {currentRequest?.limite_horas}
             </span>
           </div>
           {currentRequest?.requer_supervisor ? (

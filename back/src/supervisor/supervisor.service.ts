@@ -10,14 +10,19 @@ export class SupervisorService {
     private readonly supervisorRepository: Repository<SupervisorEntity>,
   ) {}
 
-  async findSupervisor(email: string): Promise<SupervisorEntity> {
+  async findSupervisor(
+    email: string,
+    nome: string,
+    sobrenome: string,
+    telefone: string,
+  ): Promise<SupervisorEntity> {
     const supervisor = await this.supervisorRepository.query(
       `SELECT
       id
     FROM
       supervisor
     WHERE
-      email='${email}' ;
+     email='${email}' and nome='${nome}' and  sobrenome='${sobrenome}' and  telefone='${telefone}';
      `,
     );
     if (!supervisor) {
