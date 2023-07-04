@@ -75,6 +75,13 @@ CREATE TABLE anexo (
  PRIMARY KEY (num, solicitacao_id)
 );
 
+CREATE INDEX idx_solicitacao_por_aluno ON solicitacao_aproveitamento(matricula_aluno);
+
+CREATE INDEX idx_anexos_por_solicitacao ON anexo(solicitacao_id);
+
+CREATE INDEX idx_tipos_por_curso ON tipo_atividade(codigo_curso);
+
+CREATE UNIQUE INDEX idx_supervisor_unique ON supervisor(email, nome, sobrenome, telefone);
     `);
   }
 
