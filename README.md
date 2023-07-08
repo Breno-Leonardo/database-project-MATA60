@@ -4,14 +4,10 @@ Sistema para atividades complementares
 
 ![Mapeamento Final](https://github.com/Breno-Leonardo/database-project-MATA60/assets/58619307/91ea8234-6dcc-483f-a847-7805a0c07ed7)
 
-
 ## Vídeo Demonstração 
-https://www.youtube.com/watch?v=8AKrx4YPoso
+https://youtu.be/MeV_LGHvX1k
 
-
-https://github.com/Breno-Leonardo/database-project-MATA60/assets/58619307/ba2eff0d-30b6-498d-8b2e-7e678f1f787d
-
-
+https://github.com/Breno-Leonardo/database-project-MATA60/assets/58619307/b6de7f8b-dfbc-4a7d-8c5d-0528c9f90686
 
 
 
@@ -46,6 +42,8 @@ JWT_TIME_EXPIRES=7d
 ```
 
 O hash senha de todos os usuarios nas migations referência a senha "123".
+
+O git clone do repositório pode demorar devido aos arquivos de migration com os dados de teste. 
 
 
 
