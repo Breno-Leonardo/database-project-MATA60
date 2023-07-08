@@ -18,23 +18,16 @@ export function FooterMenu({ forWho }: FooterMenuProps) {
     //Aluno
     return (
       <footer className={styles.footer}>
-        <Link to="/colaborador/solicitacoes">
+        <Link to="/aluno/solicitacoes">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={calendar}></img>
             <span>Solicitações</span>
           </div>
         </Link>
-        <Link to="/colaborador/time">
+        <Link  to="/aluno/nova-solicitacao">
           <div className={styles.itemMenu}>
-            <img className={styles.icon} src={accountGroup}></img>
-            <span>Time</span>
-          </div>
-        </Link>
-        
-        <Link to="/colaborador/historico">
-          <div className={styles.itemMenu}>
-            <img className={styles.icon} src={historyIcon}></img>
-            <span>Histórico</span>
+          <img className={styles.icon} src={calendar}></img>
+            <span>Nova Solicitação</span>
           </div>
         </Link>
         
@@ -44,19 +37,13 @@ export function FooterMenu({ forWho }: FooterMenuProps) {
     //Coordenador
     return (
       <footer className={styles.footer}>
-        <Link to="/gestor/solicitacoes">
+        <Link to="/coordenador/solicitacoes">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={calendar}></img>
             <span>Solicitações</span>
           </div>
         </Link>
-        <Link to="/gestor/time">
-          <div className={styles.itemMenu}>
-            <img className={styles.icon} src={accountGroup}></img>
-            <span>Time</span>
-          </div>
-        </Link>
-        <Link to="/gestor/historico">
+        <Link to="/coordenador/historico">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={historyIcon}></img>
             <span>Histórico</span>

@@ -87,7 +87,7 @@
     display: none;
   }
   .header {
-    background-color: var(--green);
+    background-color: var(--blue);
     width: 100%;
     display: flex;
     justify-content: center;
