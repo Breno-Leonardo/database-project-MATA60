@@ -20,6 +20,7 @@ export const URL_GET_ATIVIDADES_BY_CURSO = URL_BASE+'/tipo-atividade';
 export const URL_GET_ALL_HORAS_FALTANTES_TIPOS_ATIVIDADES  = URL_BASE+'/solicitacao-aproveitamento/atividades/horas-restantes/';
 export const URL_UPLOAD = URL_BASE+"/anexo/upload/";
 export const URL_CREATE_SOLICITACAO = URL_BASE+"/solicitacao-aproveitamento/criar";
+export const URL_UPDATE_SOLICITACAO = URL_BASE+"/solicitacao-aproveitamento/update";
 export const URL_CREATE_SUPERVISOR = URL_BASE+"/supervisor/criar";
 export const URL_SUPERVISOR = URL_BASE+"/supervisor/";
 export const URL_ANEXOS = URL_BASE+"/anexo/";

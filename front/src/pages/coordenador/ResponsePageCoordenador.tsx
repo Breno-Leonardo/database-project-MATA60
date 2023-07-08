@@ -13,6 +13,7 @@ import {
   URL_GET_ALUNO,
   URL_GET_REQUEST_BY_ID,
   URL_SUPERVISOR,
+  URL_UPDATE_SOLICITACAO,
 } from "../../constants/constants";
 import { useRequests } from "../../hooks/useRequests";
 import { Input } from "../../components/Input";
@@ -34,7 +35,6 @@ export function ResponsePageCoordenador() {
 
   useEffect(() => {
     if (currentRequest != undefined) {
-      console.log("a current", currentRequest);
       setLoadingRequest(false);
     } else {
       let idRequest = getCurrentRequestID();
@@ -79,37 +79,43 @@ export function ResponsePageCoordenador() {
   const handleManagerMessage = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
+    console.log('accept',coordenadorMessage)
+    console.log('current',currentRequest)
+
     setCoordenadorMessage(event.target.value);
   };
+
   const handleCarga = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentCarga(event.target.value);
   };
   //handle update
 
   const rejectRequest = async () => {
-    const request = async () =>
-    await postRequest(URL_CREATE_SOLICITACAO, {
-      ...currentRequest,
+    const reject = async () =>
+    await postRequest(URL_UPDATE_SOLICITACAO, {
+      id:currentRequest?.id,
       situacao:"Reprovada",
-      resposta_coordenador: coordenadorMessage
+      resposta_coordenador: coordenadorMessage,
       }).then((response) => {
         window.location.href = window.location.href.replace("resposta", "");
       });
-    request();
+      reject();
   };
 
   const acceptRequest = async () => {
-   
-    const acceptRequest = async () =>
-    await postRequest(URL_CREATE_SOLICITACAO, {
-      ...currentRequest,
+    console.log('current',currentRequest)
+    const accept = async () =>
+    await postRequest(URL_UPDATE_SOLICITACAO, {
+      id:currentRequest?.id,
+      resposta_coordenador:coordenadorMessage,
       situacao:"Aprovada",
       carga_aproveitada: currentCarga,
-      resposta_coordenador: coordenadorMessage
+      
+
       }).then((response) => {
         window.location.href = window.location.href.replace("resposta", "");
       });
-    acceptRequest();
+    accept();
   };
 
   return (

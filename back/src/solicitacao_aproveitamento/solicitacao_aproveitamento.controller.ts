@@ -105,4 +105,10 @@ export class SolicitacaoAproveitamentoController {
   async postSolicitacao(@Body() body: any) {
     return this.solicitacaoAproveitamentoService.createSolicitacao(body);
   }
+
+  @Roles([UserType.Aluno, UserType.Coordenador])
+  @Post('update')
+  async patchSolicitacao(@Body() body: any) {
+    return this.solicitacaoAproveitamentoService.updateSolicitacao(body);
+  }
 }

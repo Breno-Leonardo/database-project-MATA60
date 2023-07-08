@@ -16,6 +16,7 @@ import { UserType } from 'src/user-type';
 import { Roles } from 'src/decorators/roles.decorator';
 import { AnexoService } from './anexo.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 @Controller('anexo')
 export class AnexoController {
   constructor(private readonly anexoService: AnexoService) {}
@@ -24,29 +25,23 @@ export class AnexoController {
   async getAnexosBySolicitacaoByID(@Param('id') id) {
     return this.anexoService.findAnexosBySolicitacaoByID(id);
   }
-  @Roles([UserType.Aluno, UserType.Coordenador])
-  @Post('upload/:solicitacao_id/:num_anexo')
+
+  @Post('upload/:caminho')
   @UseInterceptors(
     FileInterceptor('anexo', {
       dest: './uploads',
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (req, file, cb) => {
+          cb(null, `${req.params.caminho}`);
+        },
+      }),
     }),
   )
-  uploadFile(
-    @UploadedFile() file,
-    @Param('solicitacao_id') solicitacaoId,
-    @Param('num_anexo') numAnexo,
-  ) {
-    const nome = file.originalname.split('.');
-    this.anexoService.createAnexo(
-      numAnexo,
-      nome[0],
-      nome[1],
-      file.filename,
-      solicitacaoId,
-    );
-    //console.log(file);
+  uploadFile(@UploadedFile() file) {
+    return;
   }
-  @Roles([UserType.Aluno, UserType.Coordenador])
+
   @Get('upload/:nome/:anexopath')
   seeUploadedFile(@Param('anexopath') file, @Param('nome') nome, @Res() res) {
     return res.download('uploads/' + file, nome);

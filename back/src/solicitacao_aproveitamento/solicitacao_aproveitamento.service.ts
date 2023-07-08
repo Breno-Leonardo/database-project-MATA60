@@ -18,7 +18,7 @@ export class SolicitacaoAproveitamentoService {
   ): Promise<SolicitacaoAproveitamentoEntity> {
     const solicitacoes = await this.solicitacaoAproveitamentoRepository.query(
       `SELECT S.id, S.situacao, S.data_da_solicitacao, S.descricao, S.carga_real, S.carga_aproveitada, S.resposta_coordenador,S.id_supervisor, T.nome AS "nome_atividade", T.tipo_carga_horaria,T.requer_supervisor,T.horas, T.limite_horas, A.matricula, A.nome, A.sobrenome FROM solicitacao_aproveitamento AS S INNER JOIN tipo_atividade AS T ON S.id_tipo=T.id INNER JOIN aluno AS A ON S.matricula_aluno=A.matricula INNER JOIN curso AS C ON C.codigo=T.codigo_curso WHERE
-      C.matricula_coordenador=${matricula_siape};
+      C.matricula_coordenador=${matricula_siape} order by S.data_da_solicitacao desc;
       `,
     );
 
@@ -36,7 +36,7 @@ export class SolicitacaoAproveitamentoService {
   ): Promise<SolicitacaoAproveitamentoEntity> {
     const solicitacoes = await this.solicitacaoAproveitamentoRepository.query(
       `SELECT S.id, S.situacao, S.data_da_solicitacao, S.descricao, S.carga_real, S.carga_aproveitada, S.resposta_coordenador,S.id_supervisor, T.nome AS "nome_atividade", T.tipo_carga_horaria,T.requer_supervisor,T.horas, T.limite_horas, A.matricula, A.nome, A.sobrenome FROM solicitacao_aproveitamento AS S INNER JOIN tipo_atividade AS T ON S.id_tipo=T.id INNER JOIN aluno AS A ON S.matricula_aluno=A.matricula INNER JOIN curso AS C ON C.codigo=T.codigo_curso WHERE
-      C.matricula_coordenador=${matricula_siape} AND S.situacao='${situacao}';
+      C.matricula_coordenador=${matricula_siape} AND S.situacao='${situacao}' order by S.data_da_solicitacao desc;
       `,
     );
 
@@ -53,7 +53,7 @@ export class SolicitacaoAproveitamentoService {
   ): Promise<SolicitacaoAproveitamentoEntity> {
     const solicitacoes = await this.solicitacaoAproveitamentoRepository.query(
       `SELECT S.id, S.situacao, S.data_da_solicitacao, S.descricao, S.carga_real, S.carga_aproveitada, S.resposta_coordenador,S.id_supervisor, T.nome AS "nome_atividade", T.tipo_carga_horaria,T.requer_supervisor,T.horas, T.limite_horas, A.matricula, A.nome, A.sobrenome FROM solicitacao_aproveitamento AS S INNER JOIN tipo_atividade AS T ON S.id_tipo=T.id INNER JOIN aluno AS A ON S.matricula_aluno=A.matricula INNER JOIN curso AS C ON C.codigo=T.codigo_curso WHERE 
-      matricula_aluno=${matricula};
+      matricula_aluno=${matricula} order by S.data_da_solicitacao desc;
       `,
     );
 
@@ -69,7 +69,7 @@ export class SolicitacaoAproveitamentoService {
   ): Promise<SolicitacaoAproveitamentoEntity> {
     const solicitacoes = await this.solicitacaoAproveitamentoRepository.query(
       `SELECT S.id, S.situacao, S.data_da_solicitacao, S.descricao, S.carga_real, S.carga_aproveitada, S.resposta_coordenador,S.id_supervisor, T.nome AS "nome_atividade", T.tipo_carga_horaria,T.requer_supervisor,T.horas, T.limite_horas, A.matricula, A.nome, A.sobrenome FROM solicitacao_aproveitamento AS S INNER JOIN tipo_atividade AS T ON S.id_tipo=T.id INNER JOIN aluno AS A ON S.matricula_aluno=A.matricula INNER JOIN curso AS C ON C.codigo=T.codigo_curso WHERE
-      matricula_aluno=${matricula} AND situacao='${situacao}';
+      matricula_aluno=${matricula} AND situacao='${situacao}' order by S.data_da_solicitacao desc;
       `,
     );
 
@@ -176,7 +176,7 @@ export class SolicitacaoAproveitamentoService {
       solicitacao_aproveitamento AS S
       INNER JOIN tipo_atividade AS T ON S.id_tipo = T.id
     WHERE
-      (S.matricula_aluno = 221855055
+      (S.matricula_aluno = ${matricula}
       AND S.situacao = 'Aprovada')
     GROUP BY
       T.id
@@ -190,14 +190,14 @@ export class SolicitacaoAproveitamentoService {
         FROM
           aluno
         WHERE
-          matricula = 221855055)
+          matricula = ${matricula})
           AND id NOT IN (SELECT
       T.id
     FROM
       solicitacao_aproveitamento AS S
       INNER JOIN tipo_atividade AS T ON S.id_tipo = T.id
     WHERE
-      (S.matricula_aluno = 221855055
+      (S.matricula_aluno = ${matricula}
       AND S.situacao = 'Aprovada'))
     ORDER BY id;
     `);
@@ -208,6 +208,76 @@ export class SolicitacaoAproveitamentoService {
   }
 
   async createSolicitacao(body: any): Promise<SolicitacaoAproveitamentoEntity> {
+    const result = await this.solicitacaoAproveitamentoRepository.query(`
+      START TRANSACTION;
+      do $$
+      DECLARE solicitacao_inserida integer ;
+      
+      
+      begin
+      
+      INSERT INTO supervisor (email, nome, sobrenome, telefone)
+      VALUES ('${body.email_supervisor}', '${body.nome_supervisor}', '${body.sobrenome_supervisor}', '${body.telefone_supervisor}') 
+      ON CONFLICT DO NOTHING;
+      
+      
+      INSERT INTO solicitacao_aproveitamento (descricao, resposta_coordenador, data_da_solicitacao,situacao,carga_real,carga_aproveitada, matricula_aluno,matricula_coordenador,id_tipo,id_supervisor)
+      VALUES ( '${body.solicitacao_descricao}', NULL, DEFAULT, 'Pendente', ${body.solicitacao_carga_real},
+              NULL, ${body.solicitacao_matricula_aluno},${body.solicitacao_matricula_coordenador}, ${body.solicitacao_id_tipo},
+             (SELECT id FROM supervisor WHERE email = '${body.email_supervisor}' and
+                nome = '${body.nome_supervisor}' and
+                sobrenome = '${body.sobrenome_supervisor}' and
+                telefone = '${body.telefone_supervisor}'
+            )
+            )returning id into solicitacao_inserida;
+      
+      
+      
+      
+      if '${body.anexo_nome_1}' !='' then
+      INSERT INTO anexo
+      VALUES
+        (
+          1, solicitacao_inserida, '${body.anexo_nome_1}',
+          '${body.anexo_extensao_1}', '${body.anexo_caminho_1}'
+        );
+      end if;
+      
+      
+      if '${body.anexo_nome_2}' !='' then
+      INSERT INTO anexo
+      VALUES
+        (
+          2, solicitacao_inserida, '${body.anexo_nome_2}',
+          '${body.anexo_extensao_2}', '${body.anexo_caminho_2}'
+        );
+      end if;
+      
+      
+      if '${body.anexo_nome_3}' !='' then
+      INSERT INTO anexo
+      VALUES
+        (
+          3, solicitacao_inserida, '${body.anexo_nome_3}',
+          '${body.anexo_extensao_3}', '${body.anexo_caminho_3}'
+        );
+      end if;
+    
+      end $$;
+      COMMIT;
+      
+
+    `);
+    if (!result) {
+      await this.solicitacaoAproveitamentoRepository.query(`
+      rollback;
+    `);
+      throw new NotFoundException(`Error`);
+    }
+    return result;
+  }
+
+  async updateSolicitacao(body: any): Promise<SolicitacaoAproveitamentoEntity> {
     return this.solicitacaoAproveitamentoRepository.save({ ...body });
   }
 }

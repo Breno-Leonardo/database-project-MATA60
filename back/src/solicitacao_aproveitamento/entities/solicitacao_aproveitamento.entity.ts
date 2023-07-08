@@ -31,6 +31,9 @@ export class SolicitacaoAproveitamentoEntity {
   @Column({ name: 'descricao', nullable: false })
   descricao: string;
 
+  @Column({ name: 'resposta_coordenador', nullable: true })
+  resposta_coordenador: string;
+
   @Column({ name: 'situacao', nullable: false })
   situacao: string;
 

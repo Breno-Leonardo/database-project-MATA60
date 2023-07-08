@@ -38,6 +38,7 @@ export function NewRequestPage() {
   const [file1, setFile1] = useState<any>();
   const [file2, setFile2] = useState<any>();
   const [file3, setFile3] = useState<any>();
+  
   const [currentAtiv, setCurrentAtiv] = useState<AtividadeType>();
   const [currentCarga, setCurrentCarga] = useState("");
   //supervisor
@@ -119,7 +120,20 @@ export function NewRequestPage() {
     let aux: any = [];
     let cont = 0;
     atividades?.map((ativ) => {
-      aux = [...aux, [cont, (ativ.tipo_carga_horaria=="G" ? "Geral - ": "Extensão - ") +  ativ.nome + " " + "(" + ativ.id + ") " + ativ.horas+"H"  ]];
+      aux = [
+        ...aux,
+        [
+          cont,
+          (ativ.tipo_carga_horaria == "G" ? "Geral - " : "Extensão - ") +
+            ativ.nome +
+            " " +
+            "(" +
+            ativ.id +
+            ") " +
+            ativ.horas +
+            "H",
+        ],
+      ];
       cont++;
     });
     if (atividades) {
@@ -170,22 +184,51 @@ export function NewRequestPage() {
   const handleRequest = async (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    let solicitacaoID = "-1";
-    let supervisorID: number = -1;
+    let bodySolicitacao={
+      email_supervisor: currentEmail,
+      nome_supervisor: currentName,
+      sobrenome_supervisor: currentLastName,
+      telefone_supervisor: currentPhone,
 
+      solicitacao_descricao: alunoMessage,
+      solicitacao_matricula_aluno: user?.matricula,
+      solicitacao_carga_real: currentCarga,
+      solicitacao_matricula_coordenador: curso?.matricula_coordenador,
+      solicitacao_id_tipo: currentAtiv?.id,
+     
+      anexo_nome_1: '',
+      anexo_caminho_1:null,
+      anexo_extensao_1: null,
+      anexo_nome_2: '',
+      anexo_caminho_2:null,
+      anexo_extensao_2: null,
+      anexo_nome_3: '',
+      anexo_caminho_3:null,
+      anexo_extensao_3: null
+    }
+    if(file1){
+        bodySolicitacao.anexo_nome_1= file1.name.split('.')[0]
+        bodySolicitacao.anexo_extensao_1= file1.name.split('.')[1]
+        bodySolicitacao.anexo_caminho_1= file1.lastModified+file1.name.split('.')[0]+file1.name.split('.')[1]+user?.matricula.toString();
+      
+      
+    }
+    if(file2){
+      bodySolicitacao.anexo_nome_2= file2.name.split('.')[0]
+        bodySolicitacao.anexo_extensao_2= file2.name.split('.')[1]
+        bodySolicitacao.anexo_caminho_2= file2.lastModified+file2.name.split('.')[0]+file2.name.split('.')[1]+user?.matricula.toString();
+    }
+    if(file3){
+      bodySolicitacao.anexo_nome_3= file3.name.split('.')[0]
+        bodySolicitacao.anexo_extensao_3= file3.name.split('.')[1]
+        bodySolicitacao.anexo_caminho_3= file3.lastModified+file3.name.split('.')[0]+file3.name.split('.')[1]+user?.matricula.toString();
+    }
+    
     const createSolicitacao = async () =>
-      await postRequest(URL_CREATE_SOLICITACAO, {
-        descricao: alunoMessage,
-        situacao: "Pendente",
-        matricula_aluno: user?.matricula,
-        carga_real: currentCarga,
-        matricula_coordenador: curso?.matricula_coordenador,
-        id_tipo: currentAtiv?.id,
-        id_supervisor: supervisorID,
-      })
+      await postRequest(URL_CREATE_SOLICITACAO, bodySolicitacao )
         .then(async (result: any) => {
-          solicitacaoID = result.id;
-          let cont = 1;
+          
+          
 
           if (file1) {
             let formData = new FormData();
@@ -193,7 +236,7 @@ export function NewRequestPage() {
 
             try {
               const response = await fetch(
-                URL_UPLOAD + solicitacaoID + "/" + cont.toString(),
+                URL_UPLOAD +bodySolicitacao.anexo_caminho_1,
                 {
                   method: "POST",
                   body: formData,
@@ -202,7 +245,7 @@ export function NewRequestPage() {
               if (!response.ok) {
                 throw new Error(response.statusText);
               }
-              cont++;
+              
             } catch (err) {
               console.log(err);
             }
@@ -213,7 +256,7 @@ export function NewRequestPage() {
 
             try {
               const response = await fetch(
-                URL_UPLOAD + solicitacaoID + "/" + cont.toString(),
+                URL_UPLOAD +bodySolicitacao.anexo_caminho_2,
                 {
                   method: "POST",
                   body: formData,
@@ -222,7 +265,7 @@ export function NewRequestPage() {
               if (!response.ok) {
                 throw new Error(response.statusText);
               }
-              cont++;
+              
             } catch (err) {
               console.log(err);
             }
@@ -233,7 +276,7 @@ export function NewRequestPage() {
 
             try {
               const response = await fetch(
-                URL_UPLOAD + solicitacaoID + "/" + cont.toString(),
+                URL_UPLOAD +bodySolicitacao.anexo_caminho_3,
                 {
                   method: "POST",
                   body: formData,
@@ -242,53 +285,22 @@ export function NewRequestPage() {
               if (!response.ok) {
                 throw new Error(response.statusText);
               }
-              // cont++;
+              
             } catch (err) {
               console.log(err);
             }
           }
+          
+          
           window.location.href = window.location.href.replace(
             "nova-solicitacao",
             ""
           );
         })
         .catch(() => {});
-
-    const createSupervisor = async () =>
-      await postRequest(URL_SUPERVISOR + "criar", {
-        email: currentEmail,
-        nome: currentName,
-        telefone: currentPhone,
-        sobrenome: currentLastName,
-      })
-        .then(async (result: any) => {
-          supervisorID = result.id;
-          createSolicitacao();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-    const checkSupervisor = async () =>
-      await getRequest(URL_SUPERVISOR + currentEmail+ currentName +currentLastName + currentPhone)
-        .then(async (result: any) => {
-          if (result.id) {
-            supervisorID = result.id;
-            createSolicitacao();
-          } else {
-            createSupervisor();
-          }
-        })
-        .catch(() => {
-          createSupervisor();
-        });
-
-    if (currentAtiv?.requer_supervisor) {
-      checkSupervisor();
-    } else {
-      createSolicitacao();
-    }
-  };
+        createSolicitacao();
+      }
+    
 
   return (
     <Container loading={loading} title="Criar Solicitação">
