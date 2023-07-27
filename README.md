@@ -2,6 +2,8 @@
 
 Sistema para atividades complementares
 
+Relátorio: [Relátorio Final](https://github.com/Breno-Leonardo/database-project-MATA60/blob/main/Relat%C3%B3rio%20Final.pdf)
+
 ![Mapeamento Final](https://github.com/Breno-Leonardo/database-project-MATA60/assets/58619307/91ea8234-6dcc-483f-a847-7805a0c07ed7)
 
 ## Vídeo Demonstração 
